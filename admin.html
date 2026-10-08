@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#14171c">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Vitrína">
-<title>Vitrína – úpravy</title>
+<meta name="apple-mobile-web-app-title" content="Vítězná shop">
+<title>Vítězná shop – úpravy</title>
 <style>
 :root{
 --ink:#14171c;--paper:#f1f2f4;--card:#ffffff;--muted:#626a76;--line:#d7dbe1;--soft:#e7e9ed;
@@ -41,6 +41,7 @@ img{display:block;max-width:100%}
 .tabs{display:flex;gap:4px;padding:12px max(16px,env(safe-area-inset-left)) 0;overflow-x:auto}
 .tab{flex:none;white-space:nowrap;padding:9px 14px;border-radius:999px;font-weight:600;font-size:15px;color:var(--muted)}
 @media (max-width:420px){.tab{padding:8px 11px;font-size:14px}}
+@media (max-width:600px){.tabs{flex-wrap:wrap;row-gap:6px}}
 .tab[aria-selected="true"]{background:var(--ink);color:#fff}
 
 main{padding:12px max(16px,env(safe-area-inset-right)) calc(32px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
@@ -133,7 +134,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 </head>
 <body>
 <header class="bar">
-<span class="brand">Vitrína</span>
+<span class="brand">Vítězná shop</span>
 <span class="state" id="state" hidden></span>
 <a class="btn btn-ghost" id="viewweb" href="#" target="_blank" rel="noopener" hidden>Web</a>
 <button class="btn btn-primary" id="save" type="button" disabled hidden>Uložit</button>
@@ -144,7 +145,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 <p>Úpravy se ukládají do repozitáře <b id="repo-name"></b> na GitHubu. Aplikace k tomu potřebuje tvůj přístupový klíč. Vložíš ho jednou na každém zařízení a zůstane uložený jen v tomto prohlížeči.</p>
 <ol>
 <li>Otevři <a id="token-link" target="_blank" rel="noopener">vytvoření klíče na GitHubu</a>.</li>
-<li>Pojmenuj ho třeba „Vitrína“ a nastav platnost (doporučuju 1 rok).</li>
+<li>Pojmenuj ho třeba „vitezna-admin“ a nastav platnost (doporučuju 1 rok).</li>
 <li>V části Repository access zvol <b>Only select repositories</b> a vyber <b id="repo-name2"></b>.</li>
 <li>V části Permissions u <b>Contents</b> zvol <b>Read and write</b>.</li>
 <li>Klikni na Generate token, klíč zkopíruj a vlož sem.</li>
@@ -163,7 +164,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 <nav class="tabs" role="tablist" aria-label="Části webu">
 <button class="tab" role="tab" type="button" data-tab="products" aria-selected="true">Produkty</button>
 <button class="tab" role="tab" type="button" data-tab="about" aria-selected="false">O projektu</button>
-<button class="tab" role="tab" type="button" data-tab="terms" aria-selected="false">Podmínky</button>
+<button class="tab" role="tab" type="button" data-tab="terms" aria-selected="false">Obraz za milion, podmínky</button>
 <button class="tab" role="tab" type="button" data-tab="settings" aria-selected="false">Nastavení</button>
 </nav>
 <main><div class="wrap">
@@ -491,7 +492,7 @@ var newSha = b.sha;
 tree.push({ path: FILE, mode: '100644', type: 'blob', sha: newSha });
 Object.keys(removed).forEach(function(path){ if (existing[path]) tree.push({ path: path, mode: '100644', type: 'blob', sha: null }); });
 return gh('POST', '/git/trees', { base_tree: baseTree, tree: tree }).then(function(t){
-return gh('POST', '/git/commits', { message: 'Úpravy vitríny', tree: t.sha, parents: [head] });
+return gh('POST', '/git/commits', { message: 'Úpravy webu Vítězná shop', tree: t.sha, parents: [head] });
 }).then(function(c){
 return gh('PATCH', '/git/refs/heads/' + BRANCH, { sha: c.sha });
 }).then(function(){ loadedSha = newSha; });
