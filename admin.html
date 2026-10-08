@@ -45,7 +45,7 @@ img{display:block;max-width:100%}
 .tab[aria-selected="true"]{background:var(--ink);color:#fff}
 
 main{padding:12px max(16px,env(safe-area-inset-right)) calc(32px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
-.wrap{max-width:1180px;margin:0 auto}
+.wrap{max-width:1680px;margin:0 auto}
 
 /* seznam produktu: fotka je hlavni */
 .list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 12px}
@@ -69,6 +69,24 @@ main{padding:12px max(16px,env(safe-area-inset-right)) calc(32px + env(safe-area
 .order button:disabled{opacity:.3;cursor:default}
 .order svg{width:14px;height:14px}
 .row.is-sold .thumb{filter:grayscale(1);opacity:.6}
+/* pocitac: produkty v mrizce */
+@media (min-width:720px){
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
+.row{position:relative;display:block;padding:0;overflow:hidden;border-width:2px}
+.row-open{display:block;width:100%;border-radius:0}
+.thumb{display:block;width:100%;height:auto;aspect-ratio:1/1;border-radius:0}
+.thumb-empty{display:grid}
+.row-text{display:block;padding:8px 10px 10px}
+.row-name{font-size:14px}
+.row-meta{gap:4px;margin-top:5px}
+.row-meta .chip{font-size:12px;padding:1px 8px}
+.order{position:absolute;top:7px;right:7px;flex-direction:row;opacity:0;transition:opacity .15s}
+.row:hover .order,.row:focus-within .order{opacity:1}
+.order button{width:32px;height:32px;background:rgba(255,255,255,.94);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.order button:disabled{display:none}
+.order svg{transform:rotate(-90deg)}
+}
+@media (min-width:720px) and (hover:none){.order{opacity:1}}
 
 /* editor */
 .layout{display:block}
@@ -123,7 +141,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 .danger-zone{padding-top:8px;border-top:1px solid var(--line)}
 
 @media (min-width:960px){
-.layout.has-editor{display:grid;grid-template-columns:minmax(360px,440px) 1fr;gap:24px;align-items:start}
+.layout.has-editor{display:grid;grid-template-columns:minmax(0,1fr) minmax(460px,600px);gap:24px;align-items:start}
 .layout.has-editor .editor{position:sticky;top:64px;inset:auto;max-height:calc(100vh - 80px);border-radius:var(--r);background:var(--card);padding-bottom:24px;z-index:1}
 .layout.has-editor .ed-top{background:var(--card)}
 .layout.has-editor .ed-back{display:none}
@@ -325,8 +343,8 @@ var meta = el('span', 'row-meta'); statusChips(p, meta); tx.appendChild(meta);
 open.appendChild(th); open.appendChild(tx);
 open.addEventListener('click', function(){ openEditor(p); });
 var ord = el('span', 'order');
-[['up', -1, 'Posunout výš'], ['down', 1, 'Posunout níž']].forEach(function(o){
-var b = el('button'); b.type = 'button'; b.innerHTML = ICON[o[0]]; b.setAttribute('aria-label', o[2]);
+[['up', -1, 'Posunout dopředu'], ['down', 1, 'Posunout dozadu']].forEach(function(o){
+var b = el('button'); b.type = 'button'; b.innerHTML = ICON[o[0]]; b.setAttribute('aria-label', o[2]); b.title = o[2];
 b.disabled = (o[1] < 0 && i === 0) || (o[1] > 0 && i === data.products.length - 1);
 b.addEventListener('click', function(){ move(i, o[1]); });
 ord.appendChild(b);
