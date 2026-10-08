@@ -88,6 +88,12 @@ main{padding:12px max(16px,env(safe-area-inset-right)) calc(32px + env(safe-area
 }
 @media (min-width:720px) and (hover:none){.order{opacity:1}}
 
+/* tazeni mysi */
+.row.drag-src{opacity:.25;border:2px dashed var(--muted)}
+.drag-ghost{position:fixed;z-index:60;pointer-events:none;margin:0;box-shadow:0 14px 34px rgba(0,0,0,.28);transform:scale(1.04) rotate(-1.2deg);transition:transform .12s;list-style:none}
+.drag-ghost .order{display:none}
+body.dragging,body.dragging *{cursor:grabbing!important;user-select:none}
+@media (hover:hover) and (pointer:fine){.items .row-open{cursor:grab}}
 /* editor */
 .layout{display:block}
 .editor{position:fixed;inset:calc(60px + env(safe-area-inset-top)) 0 0 0;z-index:30;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;padding:0 0 calc(40px + env(safe-area-inset-bottom))}
@@ -329,10 +335,10 @@ if (!p.photos.length) box.appendChild(el('span', 'chip chip-warn', 'Bez fotky'))
 function renderList(){
 var ul = $('items'); ul.textContent = '';
 var shown = data.products.filter(function(p){ return !p.hidden; }).length;
-$('count').textContent = data.products.length ? 'Na webu je ' + shown + ' z ' + data.products.length + '. Pořadí odpovídá webu.' : '';
+$('count').textContent = data.products.length ? 'Na webu je ' + shown + ' z ' + data.products.length + '. Pořadí odpovídá webu' + (matchMedia('(pointer:fine)').matches ? ', změníš ho přetažením myší.' : '.') : '';
 if (!data.products.length){ var e = el('li', 'empty', 'Zatím tu nic není. Přidej první produkt.'); ul.appendChild(e); }
 data.products.forEach(function(p, i){
-var li = el('li', 'row' + (p.sold ? ' is-sold' : '') + (current === p ? ' is-current' : ''));
+var li = el('li', 'row' + (p.sold ? ' is-sold' : '') + (current === p ? ' is-current' : '')); li.dataset.i = i;
 var open = el('button', 'row-open'); open.type = 'button'; open.setAttribute('aria-label', 'Upravit ' + (p.name || 'produkt bez názvu'));
 var ph = p.photos[0];
 var th;
@@ -563,11 +569,74 @@ return load();
 }).then(function(){ store(STORE.tok, token); start(); }, function(e){ token = ''; showLogin(why(e)); });
 }
 $('repo-name').textContent = $('repo-name2').textContent = OWNER + '/' + REPO;
-$('token-link').href = 'https://github.com/settings/personal-access-tokens/new?name=Vitr%C3%ADna&description=%C3%9Apravy%20webu&target_name=' + OWNER + '&expires_in=366&contents=write';
+$('token-link').href = 'https://github.com/settings/personal-access-tokens/new?name=vitezna-admin&description=%C3%9Apravy%20webu&target_name=' + OWNER + '&expires_in=366&contents=write';
 $('login-btn').addEventListener('click', function(){ var v = $('token').value.trim(); if (v) tryLogin(v); });
 $('token').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('login-btn').click(); });
 var saved = stored(STORE.tok);
 if (saved) tryLogin(saved); else showLogin();
+
+/* poradi tazenim mysi: chytit dlazdici (radek), pretahnout, pustit */
+(function(){
+var ul = $('items'), d = null;
+function rows(){ return [].slice.call(ul.children).filter(function(x){ return x.classList.contains('row'); }); }
+function flip(fn){
+var r = rows(), before = r.map(function(x){ return x.getBoundingClientRect(); });
+fn();
+r.forEach(function(x, k){
+if (x === d.li) return;
+var a = before[k], b = x.getBoundingClientRect(), dx = a.left - b.left, dy = a.top - b.top;
+if (!dx && !dy) return;
+x.style.transition = 'none'; x.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+requestAnimationFrame(function(){ x.style.transition = 'transform .18s ease'; x.style.transform = ''; });
+});
+}
+function start(e){
+var r = d.li.getBoundingClientRect();
+d.on = true; d.dx = d.x - r.left; d.dy = d.y - r.top;
+d.ghost = d.li.cloneNode(true); d.ghost.classList.add('drag-ghost'); d.ghost.classList.remove('is-current');
+d.ghost.style.width = r.width + 'px'; d.ghost.style.height = r.height + 'px';
+document.body.appendChild(d.ghost); d.li.classList.add('drag-src'); document.body.classList.add('dragging');
+move(e);
+}
+function move(e){
+d.ghost.style.left = (e.clientX - d.dx) + 'px'; d.ghost.style.top = (e.clientY - d.dy) + 'px';
+var t = document.elementFromPoint(e.clientX, e.clientY); t = t && t.closest ? t.closest('.items > .row') : null;
+if (!t || t === d.li) return;
+var r = t.getBoundingClientRect(), grid = getComputedStyle(ul).display === 'grid';
+var after = grid ? (e.clientX > r.left + r.width / 2) : (e.clientY > r.top + r.height / 2);
+var ref = after ? t.nextSibling : t;
+if (ref === d.li || (ref && ref.previousSibling === d.li)) return;
+if (!ref && ul.lastElementChild === d.li) return;
+flip(function(){ ul.insertBefore(d.li, ref); });
+var y = e.clientY; if (y < 90) scrollBy(0, -12); else if (y > innerHeight - 50) scrollBy(0, 12);
+}
+function end(){
+var x = d; d = null;
+removeEventListener('pointermove', onMove); removeEventListener('pointerup', onUp); removeEventListener('pointercancel', onUp);
+if (!x.on) return;
+x.ghost.remove(); x.li.classList.remove('drag-src'); document.body.classList.remove('dragging');
+var stop = function(ev){ ev.stopPropagation(); ev.preventDefault(); };
+addEventListener('click', stop, true); setTimeout(function(){ removeEventListener('click', stop, true); }, 0);
+var order = rows().map(function(r){ return +r.dataset.i; });
+var changed = order.some(function(v, k){ return v !== k; });
+if (changed){ var a = data.products; data.products = order.map(function(i){ return a[i]; }); mark(); }
+renderList();
+}
+function onMove(e){
+if (!d) return;
+if (!d.on){ if (Math.abs(e.clientX - d.x) + Math.abs(e.clientY - d.y) < 6) return; start(e); }
+else move(e);
+e.preventDefault();
+}
+function onUp(){ if (d) end(); }
+ul.addEventListener('pointerdown', function(e){
+if (e.pointerType === 'touch' || e.button !== 0) return;
+var li = e.target.closest('.items > .row'); if (!li || e.target.closest('.order')) return;
+d = { li: li, x: e.clientX, y: e.clientY, on: false };
+addEventListener('pointermove', onMove); addEventListener('pointerup', onUp); addEventListener('pointercancel', onUp);
+});
+ul.addEventListener('dragstart', function(e){ e.preventDefault(); });
+})();
 })();
 </script>
 </body>
