@@ -19,6 +19,27 @@
    ]
   },
   {
+   "id": "p2",
+   "name": "Kafkova hlava",
+   "mat": "sádrový odlitek ze silikonové formy",
+   "dim": "výška 100 mm",
+   "short": "Sádrový odlitek hlavy, 100 mm vysoký.",
+   "long": "Odlitek ze sádry, výška 100 mm, odlévaný do silikonové formy. Sem doplníš vlastní text o tom, jak věc vznikla.",
+   "sold": false,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery01/acf3f274_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery01/acf3f274.jpg"
+    },
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery01/55086b1d_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery01/55086b1d.jpg"
+    }
+   ]
+  },
+  {
    "id": "p4",
    "name": "Věc č. 4",
    "mat": "materiál",
@@ -53,27 +74,6 @@
     {
      "f": "https://test-vitezna.carrd.co/assets/images/gallery04/f7be5966_original.jpg",
      "t": "https://test-vitezna.carrd.co/assets/images/gallery04/f7be5966.jpg"
-    }
-   ]
-  },
-  {
-   "id": "p2",
-   "name": "Kafkova hlava",
-   "mat": "sádrový odlitek ze silikonové formy",
-   "dim": "výška 100 mm",
-   "short": "Sádrový odlitek hlavy, 100 mm vysoký.",
-   "long": "Odlitek ze sádry, výška 100 mm, odlévaný do silikonové formy. Sem doplníš vlastní text o tom, jak věc vznikla.",
-   "sold": false,
-   "unique": false,
-   "hidden": false,
-   "photos": [
-    {
-     "f": "https://test-vitezna.carrd.co/assets/images/gallery01/acf3f274_original.jpg",
-     "t": "https://test-vitezna.carrd.co/assets/images/gallery01/acf3f274.jpg"
-    },
-    {
-     "f": "https://test-vitezna.carrd.co/assets/images/gallery01/55086b1d_original.jpg",
-     "t": "https://test-vitezna.carrd.co/assets/images/gallery01/55086b1d.jpg"
     }
    ]
   },
