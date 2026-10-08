@@ -1,0 +1,165 @@
+{
+ "version": 1,
+ "products": [
+  {
+   "id": "p1",
+   "name": "Věc č. 8",
+   "mat": "materiál",
+   "dim": "rozměr",
+   "short": "Sem přijde krátký popis, jedna věta.",
+   "long": "Místo pro další věc. Sem přijde delší text: z čeho je, jak vznikla a jak se o ni starat.",
+   "sold": false,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery11/7fadc04a_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery11/7fadc04a.jpg"
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "name": "Kafkova hlava",
+   "mat": "sádrový odlitek ze silikonové formy",
+   "dim": "výška 100 mm",
+   "short": "Sádrový odlitek hlavy, 100 mm vysoký.",
+   "long": "Odlitek ze sádry, výška 100 mm, odlévaný do silikonové formy. Sem doplníš vlastní text o tom, jak věc vznikla.",
+   "sold": false,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery01/acf3f274_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery01/acf3f274.jpg"
+    },
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery01/55086b1d_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery01/55086b1d.jpg"
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "name": "Domeček pro myšky",
+   "mat": "překližka řezaná na CNC · jeden kus",
+   "dim": "",
+   "short": "Domeček z překližky řezané na CNC.",
+   "long": "Domeček pro myšky z překližky řezané na CNC, existuje v jednom kuse. Sem doplníš vlastní text o tom, jak věc vznikla.",
+   "sold": false,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery04/dbfb6cb0_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery04/dbfb6cb0.jpg"
+    },
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery04/f7be5966_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery04/f7be5966.jpg"
+    }
+   ]
+  },
+  {
+   "id": "p4",
+   "name": "Věc č. 4",
+   "mat": "materiál",
+   "dim": "rozměr",
+   "short": "Sem přijde krátký popis, jedna věta.",
+   "long": "Místo pro další věc. Sem přijde delší text: z čeho je, jak vznikla a jak se o ni starat.",
+   "sold": false,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery05/a2221c88_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery05/a2221c88.jpg"
+    }
+   ]
+  },
+  {
+   "id": "p5",
+   "name": "Věc č. 5",
+   "mat": "materiál",
+   "dim": "rozměr",
+   "short": "Sem přijde krátký popis, jedna věta.",
+   "long": "Místo pro další věc. Sem přijde delší text: z čeho je, jak vznikla a jak se o ni starat.",
+   "sold": true,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery06/1b9073c4_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery06/1b9073c4.jpg"
+    }
+   ]
+  },
+  {
+   "id": "p6",
+   "name": "Věc č. 6",
+   "mat": "materiál",
+   "dim": "rozměr",
+   "short": "Sem přijde krátký popis, jedna věta.",
+   "long": "Místo pro další věc. Sem přijde delší text: z čeho je, jak vznikla a jak se o ni starat.",
+   "sold": false,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery07/24973513_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery07/24973513.jpg"
+    }
+   ]
+  },
+  {
+   "id": "p7",
+   "name": "Věc č. 7",
+   "mat": "materiál",
+   "dim": "rozměr",
+   "short": "Sem přijde krátký popis, jedna věta.",
+   "long": "Místo pro další věc. Sem přijde delší text: z čeho je, jak vznikla a jak se o ni starat.",
+   "sold": false,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery08/0671abc9_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery08/0671abc9.jpg"
+    }
+   ]
+  },
+  {
+   "id": "p8",
+   "name": "Obraz",
+   "mat": "technika",
+   "dim": "rozměr",
+   "short": "Jediný originál, existuje jen jednou.",
+   "long": "Unikátní obraz, existuje jen tenhle jeden originál. Sem doplníš vlastní text: název obrazu, techniku, rozměr a jeho příběh.",
+   "sold": false,
+   "unique": true,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery12/1e27cb16_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery12/1e27cb16.jpg"
+    },
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery12/1f7845b7_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery12/1f7845b7.jpg"
+    },
+    {
+     "f": "https://test-vitezna.carrd.co/assets/images/gallery12/0b8fe22d_original.jpg",
+     "t": "https://test-vitezna.carrd.co/assets/images/gallery12/0b8fe22d.jpg"
+    }
+   ]
+  }
+ ],
+ "about": {
+  "title": "Věci dělané po jednom",
+  "text": "Vítězná je malá značka věcí dělaných po jednom. Obrazy, odlitky a drobné objekty vznikají v jedné dílně, od první skici po poslední vrstvu laku.\n\nKaždý kus je buď jediný, nebo z velmi malé série. Co se jednou prodá, už se nevrací, proto u některých věcí najdete štítek Prodáno.\n\nLíbí se vám něco? Napište mi. Rád vám o věci řeknu víc a domluvíme se na ceně."
+ },
+ "terms": {
+  "title": "Obraz za milion",
+  "text": "Sem napiš popis díla: co na obraze je, jak vznikl, technika a rozměr.\n\nSem napiš podmínky, které musí zájemce splnit, aby obraz mohl koupit.\n\nTlačítko „Hra může začít“ pod textem otevře formulář pro zprávu."
+ }
+}
