@@ -93,7 +93,7 @@ main{padding:12px max(16px,env(safe-area-inset-right)) calc(32px + env(safe-area
 .drag-ghost{position:fixed;z-index:60;pointer-events:none;margin:0;box-shadow:0 14px 34px rgba(0,0,0,.28);transform:scale(1.04) rotate(-1.2deg);transition:transform .12s;list-style:none}
 .drag-ghost .order{display:none}
 body.dragging,body.dragging *{cursor:grabbing!important;user-select:none}
-@media (hover:hover) and (pointer:fine){.items .row-open{cursor:grab}}
+@media (hover:hover) and (pointer:fine){.items .row-open{cursor:grab}.items .row{-webkit-user-select:none;user-select:none}.items img{-webkit-user-drag:none}}
 /* editor */
 .layout{display:block}
 .editor{position:fixed;inset:calc(60px + env(safe-area-inset-top)) 0 0 0;z-index:30;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;padding:0 0 calc(40px + env(safe-area-inset-bottom))}
@@ -342,7 +342,7 @@ var li = el('li', 'row' + (p.sold ? ' is-sold' : '') + (current === p ? ' is-cur
 var open = el('button', 'row-open'); open.type = 'button'; open.setAttribute('aria-label', 'Upravit ' + (p.name || 'produkt bez názvu'));
 var ph = p.photos[0];
 var th;
-if (ph){ th = el('img', 'thumb'); th.alt = ''; th.loading = 'lazy'; th.src = src(ph.t || ph.f); }
+if (ph){ th = el('img', 'thumb'); th.alt = ''; th.draggable = false; th.loading = 'lazy'; th.src = src(ph.t || ph.f); }
 else th = el('span', 'thumb thumb-empty', 'bez fotky');
 var tx = el('span', 'row-text'); tx.appendChild(el('span', 'row-name', p.name || 'Bez názvu'));
 var meta = el('span', 'row-meta'); statusChips(p, meta); tx.appendChild(meta);
@@ -632,7 +632,7 @@ function onUp(){ if (d) end(); }
 ul.addEventListener('pointerdown', function(e){
 if (e.pointerType === 'touch' || e.button !== 0) return;
 var li = e.target.closest('.items > .row'); if (!li || e.target.closest('.order')) return;
-d = { li: li, x: e.clientX, y: e.clientY, on: false };
+d = { li: li, x: e.clientX, y: e.clientY, on: false }; e.preventDefault();
 addEventListener('pointermove', onMove); addEventListener('pointerup', onUp); addEventListener('pointercancel', onUp);
 });
 ul.addEventListener('dragstart', function(e){ e.preventDefault(); });
