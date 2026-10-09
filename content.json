@@ -2,6 +2,31 @@
  "version": 1,
  "products": [
   {
+   "id": "pmv0nl8mqjgus",
+   "name": "Start light",
+   "mat": "Dřevo, epoxidová pryskyřice, kov, PETG, ",
+   "dim": "100 x 50 cm",
+   "short": "Světelný objekt inspirovaný závodními okruhy",
+   "long": "",
+   "sold": false,
+   "unique": false,
+   "hidden": false,
+   "photos": [
+    {
+     "f": "img/pmv0nl8mqjgus-mv0nrzkwloae.jpg",
+     "t": "img/pmv0nl8mqjgus-mv0nrzkwloae-t.jpg"
+    },
+    {
+     "f": "img/pmv0nl8mqjgus-mv0nrzyrutyz.jpg",
+     "t": "img/pmv0nl8mqjgus-mv0nrzyrutyz-t.jpg"
+    },
+    {
+     "f": "img/pmv0nl8mqjgus-mv0ns09tll4e.jpg",
+     "t": "img/pmv0nl8mqjgus-mv0ns09tll4e-t.jpg"
+    }
+   ]
+  },
+  {
    "id": "p2",
    "name": "Kafkova hlava",
    "mat": "sádrový odlitek ze silikonové formy",
