@@ -24,7 +24,44 @@
      "f": "img/pmv0nl8mqjgus-mv0ns09tll4e.jpg",
      "t": "img/pmv0nl8mqjgus-mv0ns09tll4e-t.jpg"
     }
-   ]
+   ],
+   "tr": {
+    "en": {
+     "name": "Start lights",
+     "mat": "Wood, epoxy resin, metal, PETG,",
+     "dim": "50 x 67 x 10 cm",
+     "short": "A light object inspired by racing circuits",
+     "long": "When I hear “Vítězná”, I don’t only think of the street in Malá Strana, but also of competing, racing and winning prizes. Start lights brings the theme of the race into the interior. The upper grid, inspired by F1 starting lights, is backlit by an LED set into an oval shape reminiscent of a racing circuit."
+    },
+    "de": {
+     "name": "Start lights",
+     "mat": "Holz, Epoxidharz, Metall, PETG,",
+     "dim": "50 x 67 x 10 cm",
+     "short": "Ein Lichtobjekt, inspiriert von Rennstrecken",
+     "long": "Wenn ich „Vítězná“ höre, denke ich nicht nur an die Straße in der Prager Kleinseite, sondern auch an Wettbewerb, Rennen und gewonnene Preise. Start lights holt das Thema Rennsport in den Wohnraum. Das obere Gitter, inspiriert von den Startlichtern der Formel 1, wird von einem LED-Licht hinterleuchtet, das in eine ovale Form eingelassen ist und an eine Rennstrecke erinnert."
+    },
+    "fr": {
+     "name": "Start lights",
+     "mat": "Bois, résine époxy, métal, PETG,",
+     "dim": "50 x 67 x 10 cm",
+     "short": "Un objet lumineux inspiré des circuits de course",
+     "long": "Quand j’entends « Vítězná », je ne pense pas seulement à la rue de Malá Strana, mais aussi à la compétition, à la course et aux prix remportés. Start lights transpose le thème de la course dans l’intérieur. La grille supérieure, inspirée des feux de départ de la F1, est rétroéclairée par une LED insérée dans une forme ovale qui rappelle un circuit de course."
+    },
+    "ru": {
+     "name": "Start lights",
+     "mat": "Дерево, эпоксидная смола, металл, PETG,",
+     "dim": "50 x 67 x 10 см",
+     "short": "Световой объект, вдохновлённый гоночными трассами",
+     "long": "Когда я слышу «Вітězná», я думаю не только об улице в Мала-Стране, но и о соревновании, гонках и выигранных призах. Start lights переносит тему гонки в интерьер. Верхняя решётка, навеянная стартовыми огнями «Формулы-1», подсвечена светодиодом, встроенным в овальную форму, которая напоминает гоночную трассу."
+    },
+    "src": {
+     "name": "Start lights",
+     "mat": "Dřevo, epoxidová pryskyřice, kov, PETG, ",
+     "dim": "50 x 67 x 10 cm",
+     "short": "Světelný objekt inspirovaný závodními okruhy",
+     "long": "Když se řekne Vítězná, nevybaví se mi jen ulice na Malé Straně, ale také téma soutěžení, závodění a vyhraných cen. Start lights přenáší téma závodu do interiéru. Vrchní mříž inspirovaná světlama F1 je podsvícená led světlem zasazeným v oválném tvaru, připomínající závodní okruh."
+    }
+   }
   },
   {
    "id": "p2",
@@ -53,7 +90,44 @@
      "f": "img/p2-mv22ro5bj4zs.jpg",
      "t": "img/p2-mv22ro5bj4zs-t.jpg"
     }
-   ]
+   ],
+   "tr": {
+    "en": {
+     "name": "Kafka’s Head",
+     "mat": "plaster cast from a silicone mould",
+     "dim": "height 100 mm",
+     "short": "Plaster cast of a head, 100 mm tall.",
+     "long": "Although I have probably never read a single book of Kafka’s from cover to cover, my Aneta loves him and talks about him quite a lot. It was through her that Franz found his way into my subconscious, and in time I caught myself thinking that I would like to pay him tribute in some future piece. As you can see, that time has come. On one half of the head I recall the famous work by David Černý behind the Quadrio in Prague, and on the other, the Cubist half, we watch the shattering of the hypersensitive soul of the great writer."
+    },
+    "de": {
+     "name": "Kafkas Kopf",
+     "mat": "Gipsabguss aus einer Silikonform",
+     "dim": "Höhe 100 mm",
+     "short": "Gipsabguss eines Kopfes, 100 mm hoch.",
+     "long": "Obwohl ich wohl nie ein Buch von Kafka ganz gelesen habe, liebt ihn meine Aneta und spricht oft von ihm. Durch sie ist Franz in mein Unterbewusstsein gelangt, und mit der Zeit ertappte ich mich bei dem Gedanken, ihm in einem künftigen Werk gern eine Hommage zu erweisen. Und diese Zeit ist, wie Sie selbst sehen, gekommen. Auf der einen Hälfte des Kopfes erinnere ich an das berühmte Werk von David Černý hinter dem Prager Quadrio, auf der anderen, kubistischen, beobachten wir das Zersplittern der hypersensiblen Seele des großen Schriftstellers."
+    },
+    "fr": {
+     "name": "La Tête de Kafka",
+     "mat": "moulage en plâtre à partir d’un moule en silicone",
+     "dim": "hauteur 100 mm",
+     "short": "Moulage en plâtre d’une tête, haut de 100 mm.",
+     "long": "Bien que je n’aie probablement jamais lu un livre de Kafka en entier, mon Aneta l’adore et en parle beaucoup. C’est grâce à elle que Franz s’est glissé dans mon subconscient, et avec le temps, je me suis surpris à vouloir lui rendre hommage dans une future œuvre. Ce moment, comme vous le voyez, est venu. Sur une moitié de la tête, je rappelle la célèbre œuvre de David Černý derrière le Quadrio à Prague ; sur l’autre, cubiste, on observe l’éclatement de l’âme hypersensible du grand écrivain."
+    },
+    "ru": {
+     "name": "Голова Кафки",
+     "mat": "гипсовая отливка из силиконовой формы",
+     "dim": "высота 100 мм",
+     "short": "Гипсовая отливка головы высотой 100 мм.",
+     "long": "Хотя я, пожалуй, ни разу не прочёл у Кафки ни одной книги целиком, моя Анета его обожает и много о нём говорит. Именно благодаря ей Франц поселился в моём подсознании, и со временем я поймал себя на мысли, что хотел бы в какой-нибудь будущей работе отдать ему дань уважения. И это время, как видите, пришло. На одной половине головы я напоминаю о знаменитой работе Давида Черного за пражским торговым центром Quadrio, а на другой, кубистической, мы наблюдаем, как дробится сверхчувствительная душа великого писателя."
+    },
+    "src": {
+     "name": "Kafkova hlava",
+     "mat": "sádrový odlitek ze silikonové formy",
+     "dim": "výška 100 mm",
+     "short": "Sádrový odlitek hlavy, 100 mm vysoký.",
+     "long": "Ačkoliv jsem od Kafky asi nikdy nečetl úplně celou knihu, moje Aneta ho miluje a dost o něm mluví. Právě skrze ní se mi dostal Franz do podvědomí a časem jsem se přistihl při myšlence, že bych mu v nějakém budoucím díle rád vzdal poctu. A ta doba, jak sami vidíte, nastala. Na jedné polovině hlavy připomínám slavné dílo od Davida Černého za pražským Quadriem a na té druhé, kubistické, pozorujeme tříštění hypersenzitivní duše onoho velkého spisovatele."
+    }
+   }
   },
   {
    "id": "p4",
