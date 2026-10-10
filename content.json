@@ -3,11 +3,11 @@
  "products": [
   {
    "id": "pmv0nl8mqjgus",
-   "name": "Start light",
+   "name": "Start lights",
    "mat": "Dřevo, epoxidová pryskyřice, kov, PETG, ",
    "dim": "100 x 50 cm",
    "short": "Světelný objekt inspirovaný závodními okruhy",
-   "long": "Když se řekne Vítězná, nevybaví se mi jen ulice na Malé Straně, ale také téma soutěžení, závodění a vyhraných cen. Start light přenáší téma závodu do interiéru. Vrchní mříž inspirovaná světlama F1 je podsvícená led světlem zasazeným v oválném tvaru, připomínající závodní okruh.",
+   "long": "Když se řekne Vítězná, nevybaví se mi jen ulice na Malé Straně, ale také téma soutěžení, závodění a vyhraných cen. Start lights přenáší téma závodu do interiéru. Vrchní mříž inspirovaná světlama F1 je podsvícená led světlem zasazeným v oválném tvaru, připomínající závodní okruh.",
    "sold": false,
    "unique": false,
    "hidden": false,
@@ -57,7 +57,7 @@
   },
   {
    "id": "p4",
-   "name": "Corner atmospheric light",
+   "name": "Corner ambient light",
    "mat": "Dřevěná prekližka, PETG",
    "dim": "30 x 30 cm ",
    "short": "Sem přijde krátký popis, jedna věta.",
