@@ -64,6 +64,20 @@ main{padding:12px max(16px,env(safe-area-inset-right)) calc(32px + env(safe-area
 .chip-unique{background:#e3e9fd;color:#1c3fae}
 .chip-hidden{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
 .chip-warn{background:#fff1e3;color:var(--warn)}
+/* preklady */
+.trbox{background:var(--card);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px}
+.tr-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tr-state{flex:1 1 200px;display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.4}
+.tr-state b{display:block;font-size:15px}
+.tr-dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:5px;background:var(--muted)}
+.tr-dot.ok{background:#1f8a4c}.tr-dot.todo{background:var(--warn)}
+.trbox .btn{min-height:38px}
+.trbox details summary{cursor:pointer;font-size:14px;color:var(--accent);font-weight:600}
+.tr-langs{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.tr-lang{border-top:1px solid var(--line);padding-top:10px;font-size:14px;line-height:1.5}
+.tr-lang h4{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tr-lang p{margin:0 0 4px;white-space:pre-wrap}
+.tr-lang .tr-k{color:var(--muted)}
 .order{display:flex;flex-direction:column;gap:4px}
 .order button{width:36px;height:30px;border-radius:7px;background:var(--soft);display:grid;place-items:center}
 .order button:disabled{opacity:.3;cursor:default}
@@ -212,12 +226,14 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 <section id="tab-about" class="textpage" hidden>
 <div class="field"><label for="about-title">Nadpis</label><input type="text" id="about-title" data-text="about" data-key="title"></div>
 <div class="field"><label for="about-text">Text</label><textarea id="about-text" data-text="about" data-key="text"></textarea><p class="hint">Prázdný řádek začne nový odstavec. Když nadpis i text smažeš, odkaz O projektu z webu zmizí.</p></div>
+<div id="tr-about"></div>
 </section>
 
 <section id="tab-terms" class="textpage" hidden>
 <p class="hint">Text, který se ukáže po kliknutí na tlačítko Podmínky u obrazu za milion.</p>
 <div class="field"><label for="terms-title">Nadpis</label><input type="text" id="terms-title" data-text="terms" data-key="title"></div>
 <div class="field"><label for="terms-text">Text</label><textarea id="terms-text" data-text="terms" data-key="text"></textarea><p class="hint">Prázdný řádek začne nový odstavec. Když nadpis i text smažeš, vrátí se u obrazu tlačítko Zeptat se na cenu.</p></div>
+<div id="tr-terms"></div>
 </section>
 
 <section id="tab-settings" class="textpage" hidden>
@@ -310,7 +326,7 @@ s.textContent = saving ? 'Ukládám…' : dirty ? 'Neuložené změny' : 'Vše u
 s.className = 'state' + (dirty && !saving ? ' dirty' : '');
 $('save').disabled = !dirty || saving;
 $('save').textContent = saving ? 'Ukládám…' : 'Uložit';
-$('translate').disabled = saving || !!busyT;
+paintT();
 }
 window.addEventListener('beforeunload', function(e){ if (dirty){ e.preventDefault(); e.returnValue = ''; } });
 
@@ -398,6 +414,7 @@ if (f[3]) box.appendChild(el('p', 'hint', f[3]));
 if (f[0] === 'mat' || f[0] === 'dim'){ if (!two){ two = el('div', 'two'); body.appendChild(two); } two.appendChild(box); }
 else body.appendChild(box);
 });
+body.appendChild(trBox(p, PF, 'product'));
 
 var sw = el('div', 'switches');
 SWITCHES.forEach(function(s){
@@ -584,18 +601,35 @@ out[l[0]] = {}; Object.keys(fields).forEach(function(k){ out[l[0]][k] = fields[k
 return out;
 });
 }
-function translate(all){
-if (busyT || saving) return;
-if (!stored(STORE.ai)){
-[].forEach.call(document.querySelectorAll('.tab'), function(o){ if (o.dataset.tab === 'settings') o.click(); });
-$('ai-key').focus(); toast('Nejdřív vlož klíč pro překlady (Claude).', true); return;
-}
+function needs(o, f){ return !!o && hasText(o, f) && !fresh(o, f); }
+/* co ceka na preklad: viditelne produkty s nazvem, O projektu a Podminky */
+function pendingJobs(all){
 var jobs = [];
-data.products.forEach(function(p){ if (!p.hidden && p.name && (all || !fresh(p, PF))) jobs.push({ o: p, f: PF, kind: 'product', name: p.name }); });
-[['about', 'O projektu'], ['terms', 'Podmínky']].forEach(function(x){ var o = data[x[0]]; if (o && hasText(o, TF) && (all || !fresh(o, TF))) jobs.push({ o: o, f: TF, kind: 'page', name: x[1] }); });
-if (!jobs.length){ toast('Všechno už je přeložené.'); return; }
+data.products.forEach(function(p){ if (!p.hidden && p.name && (all ? hasText(p, PF) : needs(p, PF))) jobs.push({ o: p, f: PF, kind: 'product' }); });
+[['about', 'O projektu'], ['terms', 'Podmínky']].forEach(function(x){ var o = data[x[0]]; if (o && (all ? hasText(o, TF) : needs(o, TF))) jobs.push({ o: o, f: TF, kind: 'page' }); });
+return jobs;
+}
+var trBoxes = [];
+/* horni tlacitko ukazuje, kolik veci ceka na preklad; kdyz nic, je vypnute */
+function paintT(){
+var b = $('translate'); if (!b || !data) return;
+var n = pendingJobs(false).length;
+b.disabled = saving || !!busyT || !n;
+b.textContent = busyT || (n ? 'Přeložit změny (' + n + ')' : 'Vše přeloženo');
+b.title = n ? 'Přeloží jen texty, které se změnily, a uloží je.' : 'Všechny texty jsou přeložené.';
+trBoxes = trBoxes.filter(function(x){ return x.el.isConnected; });
+trBoxes.forEach(function(x){ x.paint(); });
+}
+function haveKey(){
+if (stored(STORE.ai)) return true;
+[].forEach.call(document.querySelectorAll('.tab'), function(o){ if (o.dataset.tab === 'settings') o.click(); });
+$('ai-key').focus(); toast('Nejdřív vlož klíč pro překlady (Claude).', true); return false;
+}
+function runJobs(jobs){
+if (busyT || saving || !jobs.length) return;
+if (!haveKey()) return;
 var done = 0, failed = null;
-function step(){ busyT = 'Překládám ' + (done + 1) + ' / ' + jobs.length + '…'; $('translate').textContent = busyT; paintState(); }
+function step(){ busyT = jobs.length > 1 ? 'Překládám ' + (done + 1) + ' / ' + jobs.length + '…' : 'Překládám…'; paintState(); }
 step();
 jobs.reduce(function(chain, j){
 return chain.then(function(){
@@ -605,12 +639,51 @@ var src = srcOf(j.o, j.f);
 return ask(src, j.kind).then(function(tr){ tr.src = src; j.o.tr = tr; done++; }, function(e){ failed = e; });
 });
 }, Promise.resolve()).then(function(){
-busyT = ''; $('translate').textContent = 'Přeložit';
+busyT = '';
 if (done){ mark(); renderList(); }
 paintState();
 if (failed){ toast((done ? 'Přeloženo ' + done + ' z ' + jobs.length + '. ' : '') + (failed.message || 'Překlad se nepovedl.') + (done ? ' Hotové překlady ulož tlačítkem Uložit.' : ''), true); return; }
 toast('Přeloženo. Ukládám…'); save();
 });
+}
+function translate(all){
+if (busyT || saving) return;
+var jobs = pendingJobs(all);
+if (!jobs.length){ toast('Všechno už je přeložené.'); return; }
+runJobs(jobs);
+}
+/* blok Preklady u produktu a u textu: stav, tlacitko a nahled prekladu */
+var LANG_NAMES = { en: 'Angličtina', de: 'Němčina', fr: 'Francouzština', ru: 'Ruština' };
+var LABELS = { name: 'Název', mat: 'Materiál', dim: 'Rozměry', short: 'Krátký popis', long: 'Popis', title: 'Nadpis', text: 'Text' };
+function trBox(o, f, kind){
+var box = el('div', 'trbox'), head = el('div', 'tr-head'), st = el('div', 'tr-state'), dot = el('span', 'tr-dot'), txt = el('span'), b = el('button', 'btn btn-primary'), det = el('details'), sum = el('summary', '', 'Zobrazit překlady'), list = el('div', 'tr-langs');
+b.type = 'button';
+st.appendChild(dot); st.appendChild(txt); head.appendChild(st); head.appendChild(b); box.appendChild(head);
+det.appendChild(sum); det.appendChild(list); box.appendChild(det);
+b.addEventListener('click', function(){ runJobs([{ o: o, f: f, kind: kind }]); });
+var shown = '';
+function paint(){
+var has = hasText(o, f), ok = has && fresh(o, f), old = has && !ok && o.tr && o.tr.src;
+dot.className = 'tr-dot' + (ok ? ' ok' : has ? ' todo' : '');
+txt.innerHTML = '';
+txt.appendChild(el('b', '', ok ? 'Přeloženo' : !has ? 'Není co překládat' : old ? 'Text se změnil' : 'Zatím nepřeloženo'));
+txt.appendChild(document.createTextNode(ok ? 'Angličtina, němčina, francouzština a ruština odpovídají českému textu.' : !has ? 'Až napíšeš text, půjde přeložit.' : old ? 'Na webu se v ostatních jazycích zatím ukazuje čeština. Přelož a ulož změnu.' : 'V ostatních jazycích se zatím ukazuje čeština.'));
+b.hidden = !has || ok; b.disabled = !!busyT || saving;
+b.textContent = busyT ? busyT : 'Přeložit a uložit';
+det.hidden = !(o.tr && o.tr.src);
+sum.textContent = ok ? 'Zobrazit překlady' : 'Zobrazit poslední překlady';
+var key = JSON.stringify(o.tr || {});
+if (key === shown) return; shown = key; list.textContent = '';
+LANGS.forEach(function(l){
+var x = o.tr && o.tr[l[0]]; if (!x) return;
+var d = el('div', 'tr-lang'); d.appendChild(el('h4', '', LANG_NAMES[l[0]]));
+f.forEach(function(k){ if (!x[k]) return; var p = el('p'); p.appendChild(el('span', 'tr-k', LABELS[k] + ': ')); p.appendChild(document.createTextNode(x[k])); d.appendChild(p); });
+list.appendChild(d);
+});
+}
+trBoxes.push({ el: box, paint: paint });
+paint();
+return box;
 }
 $('translate').addEventListener('click', function(){ translate(false); });
 $('translate-all').addEventListener('click', function(){ if (confirm('Přeložit znovu úplně všechno? Dosavadní překlady se nahradí novými.')) translate(true); });
@@ -634,7 +707,7 @@ $('login-msg').textContent = msg || '';
 }
 function start(){
 $('login').hidden = true; $('app').hidden = false; $('save').hidden = false; $('translate').hidden = false;
-paintWeb(); fillTexts(); renderList(); paintState();
+paintWeb(); fillTexts(); $('tr-about').appendChild(trBox(data.about, TF, 'page')); $('tr-terms').appendChild(trBox(data.terms, TF, 'page')); renderList(); paintState();
 $('who').textContent = 'Přihlášeno klíčem k repozitáři ' + OWNER + '/' + REPO + '. Klíč je uložený jen v tomto prohlížeči.';
 }
 function tryLogin(t){
