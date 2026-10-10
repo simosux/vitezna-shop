@@ -156,7 +156,44 @@
      "f": "img/p4-mv230bkluqir.jpg",
      "t": "img/p4-mv230bkluqir-t.jpg"
     }
-   ]
+   ],
+   "tr": {
+    "src": {
+     "name": "Corner ambient light",
+     "mat": "Dřevěná prekližka, PETG",
+     "dim": "",
+     "short": "Sem přijde krátký popis, jedna věta.",
+     "long": "Místo pro další věc. Sem přijde delší text: z čeho je, jak vznikla a jak se o ni starat."
+    },
+    "en": {
+     "name": "Corner ambient light",
+     "mat": "Plywood, PETG",
+     "dim": "",
+     "short": "A short description goes here, one sentence.",
+     "long": "A place for another piece. A longer text goes here: what it is made of, how it came about and how to care for it."
+    },
+    "de": {
+     "name": "Corner ambient light",
+     "mat": "Sperrholz, PETG",
+     "dim": "",
+     "short": "Hier kommt eine kurze Beschreibung hin, ein Satz.",
+     "long": "Platz für ein weiteres Stück. Hier kommt ein längerer Text hin: woraus es besteht, wie es entstanden ist und wie man es pflegt."
+    },
+    "fr": {
+     "name": "Corner ambient light",
+     "mat": "Contreplaqué, PETG",
+     "dim": "",
+     "short": "Une courte description ici, en une phrase.",
+     "long": "Une place pour une autre pièce. Ici viendra un texte plus long : de quoi elle est faite, comment elle est née et comment en prendre soin."
+    },
+    "ru": {
+     "name": "Corner ambient light",
+     "mat": "Фанера, PETG",
+     "dim": "",
+     "short": "Здесь будет короткое описание в одно предложение.",
+     "long": "Место для ещё одной вещи. Здесь будет более длинный текст: из чего она сделана, как появилась и как за ней ухаживать."
+    }
+   }
   },
   {
    "id": "p8",
@@ -181,15 +218,96 @@
      "f": "https://test-vitezna.carrd.co/assets/images/gallery12/0b8fe22d_original.jpg",
      "t": "https://test-vitezna.carrd.co/assets/images/gallery12/0b8fe22d.jpg"
     }
-   ]
+   ],
+   "tr": {
+    "src": {
+     "name": "Obraz",
+     "mat": "technika",
+     "dim": "rozměr",
+     "short": "Jediný originál, existuje jen jednou.",
+     "long": "Unikátní obraz, existuje jen tenhle jeden originál. Sem doplníš vlastní text: název obrazu, techniku, rozměr a jeho příběh."
+    },
+    "en": {
+     "name": "Painting",
+     "mat": "technique",
+     "dim": "size",
+     "short": "A single original; only this one exists.",
+     "long": "A unique painting; this one original is all there is. Your own text goes here: the title of the painting, the technique, the size and its story."
+    },
+    "de": {
+     "name": "Gemälde",
+     "mat": "Technik",
+     "dim": "Maße",
+     "short": "Ein einziges Original, das es nur einmal gibt.",
+     "long": "Ein einzigartiges Gemälde – es gibt nur dieses eine Original. Hier kommt dein eigener Text hin: Titel des Bildes, Technik, Maße und seine Geschichte."
+    },
+    "fr": {
+     "name": "Tableau",
+     "mat": "technique",
+     "dim": "dimensions",
+     "short": "Un original unique, il n’en existe qu’un seul.",
+     "long": "Un tableau unique : il n’en existe que cet original. Ici viendra ton propre texte : le titre du tableau, la technique, les dimensions et son histoire."
+    },
+    "ru": {
+     "name": "Картина",
+     "mat": "техника",
+     "dim": "размер",
+     "short": "Единственный оригинал, существует в одном экземпляре.",
+     "long": "Уникальная картина: существует только этот единственный оригинал. Здесь будет твой собственный текст: название картины, техника, размер и её история."
+    }
+   }
   }
  ],
  "about": {
   "title": "Věci dělané po jednom",
-  "text": "Vítězná je malá značka věcí dělaných po jednom. Obrazy, tisky, objekty a drobné odlitky vznikají v jedné dílně, od první skici po poslední vrstvu laku.\n\nKaždý kus je buď jediný, nebo z velmi malé série. Co se jednou prodá, už se nevrací, proto u některých věcí najdete štítek Prodáno.\n\nLíbí se vám něco? Napište mi. Rád vám o věci řeknu víc."
+  "text": "Vítězná je malá značka věcí dělaných po jednom. Obrazy, tisky, objekty a drobné odlitky vznikají v jedné dílně, od první skici po poslední vrstvu laku.\n\nKaždý kus je buď jediný, nebo z velmi malé série. Co se jednou prodá, už se nevrací, proto u některých věcí najdete štítek Prodáno.\n\nLíbí se vám něco? Napište mi. Rád vám o věci řeknu víc.",
+  "tr": {
+   "src": {
+    "title": "Věci dělané po jednom",
+    "text": "Vítězná je malá značka věcí dělaných po jednom. Obrazy, tisky, objekty a drobné odlitky vznikají v jedné dílně, od první skici po poslední vrstvu laku.\n\nKaždý kus je buď jediný, nebo z velmi malé série. Co se jednou prodá, už se nevrací, proto u některých věcí najdete štítek Prodáno.\n\nLíbí se vám něco? Napište mi. Rád vám o věci řeknu víc."
+   },
+   "en": {
+    "title": "Things made one at a time",
+    "text": "Vítězná is a small label of things made one at a time. Paintings, prints, objects and small casts are made in a single workshop, from the first sketch to the last coat of varnish.\n\nEvery piece is either one of a kind or from a very small series. Once something is sold, it does not come back, which is why some pieces carry a Sold label.\n\nDo you like something? Write to me. I will be glad to tell you more about it."
+   },
+   "de": {
+    "title": "Dinge, eins nach dem anderen gemacht",
+    "text": "Vítězná ist eine kleine Marke für Dinge, die eins nach dem anderen entstehen. Bilder, Drucke, Objekte und kleine Abgüsse entstehen in einer einzigen Werkstatt, von der ersten Skizze bis zur letzten Lackschicht.\n\nJedes Stück ist entweder ein Unikat oder stammt aus einer sehr kleinen Serie. Was einmal verkauft ist, kommt nicht wieder – deshalb tragen manche Stücke das Schild Verkauft.\n\nGefällt Ihnen etwas? Schreiben Sie mir. Ich erzähle Ihnen gern mehr darüber."
+   },
+   "fr": {
+    "title": "Des choses faites une à une",
+    "text": "Vítězná est une petite marque d’objets faits un à un. Tableaux, estampes, objets et petits moulages naissent dans un seul atelier, de la première esquisse à la dernière couche de vernis.\n\nChaque pièce est soit unique, soit issue d’une toute petite série. Ce qui est vendu ne revient pas, c’est pourquoi certaines pièces portent la mention Vendu.\n\nQuelque chose vous plaît ? Écrivez-moi. Je vous en dirai volontiers davantage."
+   },
+   "ru": {
+    "title": "Вещи, сделанные по одной",
+    "text": "Vítězná — маленькая марка вещей, сделанных по одной. Картины, принты, объекты и небольшие отливки создаются в одной мастерской — от первого эскиза до последнего слоя лака.\n\nКаждая вещь либо единственная, либо из очень маленькой серии. То, что продано, уже не возвращается, поэтому у некоторых вещей стоит отметка «Продано».\n\nВам что-то понравилось? Напишите мне. Я с радостью расскажу о вещи подробнее."
+   }
+  }
  },
  "terms": {
   "title": "Obraz za milion",
-  "text": "Sem napiš popis díla: co na obraze je, jak vznikl, technika a rozměr.\n\nSem napiš podmínky, které musí zájemce splnit, aby obraz mohl koupit.\n\nTlačítko „Hra může začít“ pod textem otevře formulář pro zprávu."
+  "text": "Sem napiš popis díla: co na obraze je, jak vznikl, technika a rozměr.\n\nSem napiš podmínky, které musí zájemce splnit, aby obraz mohl koupit.\n\nTlačítko „Hra může začít“ pod textem otevře formulář pro zprávu.",
+  "tr": {
+   "src": {
+    "title": "Obraz za milion",
+    "text": "Sem napiš popis díla: co na obraze je, jak vznikl, technika a rozměr.\n\nSem napiš podmínky, které musí zájemce splnit, aby obraz mohl koupit.\n\nTlačítko „Hra může začít“ pod textem otevře formulář pro zprávu."
+   },
+   "en": {
+    "title": "Painting for a Million",
+    "text": "Write a description of the work here: what the painting shows, how it came about, the technique and the size.\n\nWrite the conditions here that a buyer must meet to be able to buy the painting.\n\nThe “Let the game begin” button below the text opens a message form."
+   },
+   "de": {
+    "title": "Bild für eine Million",
+    "text": "Hier kommt die Beschreibung des Werks hin: was auf dem Bild zu sehen ist, wie es entstanden ist, Technik und Maße.\n\nHier kommen die Bedingungen hin, die ein Interessent erfüllen muss, um das Bild kaufen zu können.\n\nDie Schaltfläche „Das Spiel kann beginnen“ unter dem Text öffnet ein Nachrichtenformular."
+   },
+   "fr": {
+    "title": "Tableau à un million",
+    "text": "Écris ici la description de l’œuvre : ce que montre le tableau, comment il est né, la technique et les dimensions.\n\nÉcris ici les conditions qu’un acheteur doit remplir pour pouvoir acheter le tableau.\n\nLe bouton « Que le jeu commence » sous le texte ouvre un formulaire de message."
+   },
+   "ru": {
+    "title": "Картина за миллион",
+    "text": "Здесь опиши произведение: что изображено на картине, как она появилась, техника и размер.\n\nЗдесь напиши условия, которые должен выполнить желающий, чтобы купить картину.\n\nКнопка «Игра начинается» под текстом открывает форму для сообщения."
+   }
+  }
  }
 }
