@@ -260,27 +260,27 @@
  ],
  "about": {
   "title": "Věci dělané po jednom",
-  "text": "Vítězná je malá značka věcí dělaných po jednom. Obrazy, tisky, objekty a drobné odlitky vznikají v jedné dílně, od první skici po poslední vrstvu laku.\n\nKaždý kus je buď jediný, nebo z velmi malé série. Co se jednou prodá, už se nevrací, proto u některých věcí najdete štítek Prodáno.\n\nLíbí se vám něco? Napište mi. Rád vám o věci řeknu víc.",
+  "text": "Vítězná je malá značka věcí dělaných po jednom. Obrazy, tisky, objekty a drobné odlitky vznikají v jedné dílně, od první skici do poslední vrstvy laku.\n\nKaždý kus je buď jediný, nebo z velmi malé série. Co se jednou prodá, už se nevrací, proto u některých věcí najdete štítek Prodáno.\n\nLíbí se vám něco? Napište mi. Rád vám o věci řeknu víc.",
   "tr": {
-   "src": {
-    "title": "Věci dělané po jednom",
-    "text": "Vítězná je malá značka věcí dělaných po jednom. Obrazy, tisky, objekty a drobné odlitky vznikají v jedné dílně, od první skici po poslední vrstvu laku.\n\nKaždý kus je buď jediný, nebo z velmi malé série. Co se jednou prodá, už se nevrací, proto u některých věcí najdete štítek Prodáno.\n\nLíbí se vám něco? Napište mi. Rád vám o věci řeknu víc."
-   },
    "en": {
-    "title": "Things made one at a time",
-    "text": "Vítězná is a small label of things made one at a time. Paintings, prints, objects and small casts are made in a single workshop, from the first sketch to the last coat of varnish.\n\nEvery piece is either one of a kind or from a very small series. Once something is sold, it does not come back, which is why some pieces carry a Sold label.\n\nDo you like something? Write to me. I will be glad to tell you more about it."
+    "title": "Things Made One at a Time",
+    "text": "Vítězná is a small label for things made one at a time. Paintings, prints, objects and small casts are all made in a single workshop, from the first sketch to the last coat of varnish.\n\nEvery piece is either one of a kind or part of a very small series. Once something is sold, it doesn’t come back, which is why you’ll find a “Sold” label on some of the items.\n\nSee something you like? Write to me. I’d be happy to tell you more about it."
    },
    "de": {
-    "title": "Dinge, eins nach dem anderen gemacht",
-    "text": "Vítězná ist eine kleine Marke für Dinge, die eins nach dem anderen entstehen. Bilder, Drucke, Objekte und kleine Abgüsse entstehen in einer einzigen Werkstatt, von der ersten Skizze bis zur letzten Lackschicht.\n\nJedes Stück ist entweder ein Unikat oder stammt aus einer sehr kleinen Serie. Was einmal verkauft ist, kommt nicht wieder – deshalb tragen manche Stücke das Schild Verkauft.\n\nGefällt Ihnen etwas? Schreiben Sie mir. Ich erzähle Ihnen gern mehr darüber."
+    "title": "Dinge, einzeln gemacht",
+    "text": "Vítězná ist eine kleine Marke für Dinge, die einzeln gefertigt werden. Bilder, Drucke, Objekte und kleine Abgüsse entstehen in einer einzigen Werkstatt, von der ersten Skizze bis zur letzten Schicht Lack.\n\nJedes Stück ist entweder ein Unikat oder stammt aus einer sehr kleinen Serie. Was einmal verkauft ist, kommt nicht wieder, deshalb finden Sie bei manchen Arbeiten den Hinweis „Verkauft“.\n\nGefällt Ihnen etwas? Schreiben Sie mir. Ich erzähle Ihnen gern mehr dazu."
    },
    "fr": {
-    "title": "Des choses faites une à une",
-    "text": "Vítězná est une petite marque d’objets faits un à un. Tableaux, estampes, objets et petits moulages naissent dans un seul atelier, de la première esquisse à la dernière couche de vernis.\n\nChaque pièce est soit unique, soit issue d’une toute petite série. Ce qui est vendu ne revient pas, c’est pourquoi certaines pièces portent la mention Vendu.\n\nQuelque chose vous plaît ? Écrivez-moi. Je vous en dirai volontiers davantage."
+    "title": "Des objets faits un par un",
+    "text": "Vítězná est une petite marque d’objets faits un par un. Tableaux, estampes, objets et petits moulages naissent dans un seul atelier, du premier croquis à la dernière couche de vernis.\n\nChaque pièce est soit unique, soit issue d’une toute petite série. Ce qui est vendu ne revient pas : c’est pourquoi vous trouverez la mention « Vendu » sur certaines pièces.\n\nQuelque chose vous plaît ? Écrivez-moi. Je vous en dirai volontiers plus."
    },
    "ru": {
     "title": "Вещи, сделанные по одной",
-    "text": "Vítězná — маленькая марка вещей, сделанных по одной. Картины, принты, объекты и небольшие отливки создаются в одной мастерской — от первого эскиза до последнего слоя лака.\n\nКаждая вещь либо единственная, либо из очень маленькой серии. То, что продано, уже не возвращается, поэтому у некоторых вещей стоит отметка «Продано».\n\nВам что-то понравилось? Напишите мне. Я с радостью расскажу о вещи подробнее."
+    "text": "Vítězná — это небольшая марка вещей, которые делаются по одной. Картины, оттиски, объекты и небольшие слепки создаются в одной мастерской — от первого наброска до последнего слоя лака.\n\nКаждая работа либо существует в единственном экземпляре, либо входит в очень малую серию. Проданное уже не возвращается, поэтому у некоторых вещей вы увидите пометку «Продано».\n\nПонравилось что-то? Напишите мне. Буду рад рассказать о вещи подробнее."
+   },
+   "src": {
+    "title": "Věci dělané po jednom",
+    "text": "Vítězná je malá značka věcí dělaných po jednom. Obrazy, tisky, objekty a drobné odlitky vznikají v jedné dílně, od první skici do poslední vrstvy laku.\n\nKaždý kus je buď jediný, nebo z velmi malé série. Co se jednou prodá, už se nevrací, proto u některých věcí najdete štítek Prodáno.\n\nLíbí se vám něco? Napište mi. Rád vám o věci řeknu víc."
    }
   }
  },
