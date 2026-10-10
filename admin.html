@@ -153,6 +153,8 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 .layout.has-editor .ed-back{display:none}
 }
 @media (max-width:420px){.two{grid-template-columns:1fr}.btn{padding:0 13px}}
+@media (max-width:520px){.bar .state{display:none}.bar .brand{font-size:17px}}
+#tab-settings a{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -161,6 +163,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 <span class="brand">Vítězná shop</span>
 <span class="state" id="state" hidden></span>
 <a class="btn btn-ghost" id="viewweb" href="#" target="_blank" rel="noopener" hidden>Web</a>
+<button class="btn btn-ghost" id="translate" type="button" hidden>Přeložit</button>
 <button class="btn btn-primary" id="save" type="button" disabled hidden>Uložit</button>
 </header>
 
@@ -219,6 +222,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 
 <section id="tab-settings" class="textpage" hidden>
 <div class="field"><label for="web-url">Adresa webu</label><input type="text" id="web-url" placeholder="https://…" inputmode="url"><p class="hint">Kam vede tlačítko Web nahoře. Ukládá se jen v tomto prohlížeči.</p></div>
+<div class="field"><label for="ai-key">Klíč pro překlady (Claude)</label><input type="password" id="ai-key" autocomplete="off" spellcheck="false" placeholder="sk-ant-…"><p class="hint">Tlačítko Přeložit nahoře přeloží názvy, popisy, O projektu a Podmínky do angličtiny, němčiny, francouzštiny a ruštiny a rovnou je uloží. Klíč vytvoříš na <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> (Create Key). Platí se z kreditu tvého účtu, jeden překlad celého webu stojí haléře. Klíč zůstává jen v tomto prohlížeči.</p><div><button class="btn btn-ghost" id="translate-all" type="button">Přeložit všechno znovu</button></div></div>
 <div class="field"><span class="group-title">Přístup</span><p class="hint" id="who"></p><div><button class="btn btn-danger" id="logout" type="button">Odhlásit a smazat klíč z tohoto zařízení</button></div></div>
 </section>
 
@@ -233,7 +237,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 var OWNER = 'simosux', REPO = 'vitezna-shop', BRANCH = 'main', FILE = 'content.json';
 var API = 'https://api.github.com/repos/' + OWNER + '/' + REPO;
 var RAW = 'https://raw.githubusercontent.com/' + OWNER + '/' + REPO + '/' + BRANCH + '/';
-var STORE = { tok: 'vt-token', web: 'vt-web' };
+var STORE = { tok: 'vt-token', web: 'vt-web', ai: 'vt-ai' };
 var ICON = {
 up: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10l5-5 5 5"/></svg>',
 down: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg>',
@@ -306,6 +310,7 @@ s.textContent = saving ? 'Ukládám…' : dirty ? 'Neuložené změny' : 'Vše u
 s.className = 'state' + (dirty && !saving ? ' dirty' : '');
 $('save').disabled = !dirty || saving;
 $('save').textContent = saving ? 'Ukládám…' : 'Uložit';
+$('translate').disabled = saving || !!busyT;
 }
 window.addEventListener('beforeunload', function(e){ if (dirty){ e.preventDefault(); e.returnValue = ''; } });
 
@@ -331,6 +336,7 @@ if (p.unique) box.appendChild(el('span', 'chip chip-unique', 'Obraz za milion'))
 if (p.hidden) box.appendChild(el('span', 'chip chip-hidden', 'Skryto'));
 if (!p.name) box.appendChild(el('span', 'chip chip-warn', 'Chybí název'));
 if (!p.photos.length) box.appendChild(el('span', 'chip chip-warn', 'Bez fotky'));
+if (!p.hidden && p.name && !fresh(p, PF)) box.appendChild(el('span', 'chip chip-warn', 'Bez překladu'));
 }
 function renderList(){
 var ul = $('items'); ul.textContent = '';
@@ -539,24 +545,95 @@ data.products.unshift(p); mark(); openEditor(p);
 setTimeout(function(){ var n = $('f-name'); if (n) n.focus(); }, 50);
 });
 
+/* preklady: Claude prelozi ceske texty do jazyku webu a ulozi je k produktu (tr) */
+var LANGS = [['en', 'angličtina'], ['de', 'němčina'], ['fr', 'francouzština'], ['ru', 'ruština']];
+var PF = ['name', 'mat', 'dim', 'short', 'long'], TF = ['title', 'text'];
+var MODELS = ['claude-sonnet-5-5', 'claude-haiku-4-5-20251001'];
+var busyT = '';
+function srcOf(o, f){ var r = {}; f.forEach(function(k){ r[k] = String(o[k] || ''); }); return r; }
+function fresh(o, f){
+var t = o.tr; if (!t || !t.src) return false;
+if (f.some(function(k){ return String(o[k] || '') !== String(t.src[k] || ''); })) return false;
+return LANGS.every(function(l){ return t[l[0]] && typeof t[l[0]] === 'object'; });
+}
+function hasText(o, f){ return f.some(function(k){ return String(o[k] || '').trim(); }); }
+function ask(fields, kind){
+var key = stored(STORE.ai);
+var sys = 'You translate the website of Vítězná, a small Czech studio selling handmade one-off objects (paintings, plaster casts, CNC-cut plywood pieces). Translate the given Czech fields into English (en), German (de), French (fr) and Russian (ru). Write natural, concise, warm gallery-style copy as a native speaker would, not word-for-word. Keep the meaning and facts exactly; keep numbers, units and dimensions; use each language\'s own typographic quotes. Product names: translate descriptive Czech names (e.g. "Kafkova hlava" → "Kafka’s Head", "Věc č. 8" → "Item no. 8"); keep brand and personal names. Keep paragraph breaks (blank lines) exactly. An empty field stays empty. Reply with JSON only, no comments: {"en":{…},"de":{…},"fr":{…},"ru":{…}} with the same keys as the input.';
+var user = (kind === 'product' ? 'Product texts' : 'Page text') + ' (Czech):\n' + JSON.stringify(fields, null, 1);
+function call(i){
+return fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: MODELS[i], max_tokens: 4000, system: sys, messages: [{ role: 'user', content: user }] }) }).then(function(r){
+return r.json().catch(function(){ return {}; }).then(function(j){
+if (r.ok) return j;
+var m = (j.error && j.error.message) || ('HTTP ' + r.status);
+if ((r.status === 404 || /model/i.test(m) && r.status === 400) && i + 1 < MODELS.length) return call(i + 1);
+var e = new Error(r.status === 401 ? 'Klíč pro překlady nefunguje. Zkontroluj ho v Nastavení.' : /credit|balance|billing/i.test(m) ? 'Na účtu Claude došel kredit. Dobij ho na console.anthropic.com.' : 'Překlad se nepovedl: ' + m);
+throw e;
+});
+});
+}
+return call(0).then(function(j){
+var t = ((j.content || [])[0] || {}).text || '', a = t.indexOf('{'), b = t.lastIndexOf('}'), o;
+try { o = JSON.parse(t.slice(a, b + 1)); } catch (e) { throw new Error('Překlad přišel v nečitelné podobě. Zkus to prosím znovu.'); }
+var out = {};
+LANGS.forEach(function(l){
+var x = o[l[0]];
+if (!x || typeof x !== 'object') throw new Error('V překladu chybí ' + l[1] + '. Zkus to prosím znovu.');
+out[l[0]] = {}; Object.keys(fields).forEach(function(k){ out[l[0]][k] = fields[k] ? String(x[k] || '').trim() : ''; });
+});
+return out;
+});
+}
+function translate(all){
+if (busyT || saving) return;
+if (!stored(STORE.ai)){
+[].forEach.call(document.querySelectorAll('.tab'), function(o){ if (o.dataset.tab === 'settings') o.click(); });
+$('ai-key').focus(); toast('Nejdřív vlož klíč pro překlady (Claude).', true); return;
+}
+var jobs = [];
+data.products.forEach(function(p){ if (!p.hidden && p.name && (all || !fresh(p, PF))) jobs.push({ o: p, f: PF, kind: 'product', name: p.name }); });
+[['about', 'O projektu'], ['terms', 'Podmínky']].forEach(function(x){ var o = data[x[0]]; if (o && hasText(o, TF) && (all || !fresh(o, TF))) jobs.push({ o: o, f: TF, kind: 'page', name: x[1] }); });
+if (!jobs.length){ toast('Všechno už je přeložené.'); return; }
+var done = 0, failed = null;
+function step(){ busyT = 'Překládám ' + (done + 1) + ' / ' + jobs.length + '…'; $('translate').textContent = busyT; paintState(); }
+step();
+jobs.reduce(function(chain, j){
+return chain.then(function(){
+if (failed) return;
+step();
+var src = srcOf(j.o, j.f);
+return ask(src, j.kind).then(function(tr){ tr.src = src; j.o.tr = tr; done++; }, function(e){ failed = e; });
+});
+}, Promise.resolve()).then(function(){
+busyT = ''; $('translate').textContent = 'Přeložit';
+if (done){ mark(); renderList(); }
+paintState();
+if (failed){ toast((done ? 'Přeloženo ' + done + ' z ' + jobs.length + '. ' : '') + (failed.message || 'Překlad se nepovedl.') + (done ? ' Hotové překlady ulož tlačítkem Uložit.' : ''), true); return; }
+toast('Přeloženo. Ukládám…'); save();
+});
+}
+$('translate').addEventListener('click', function(){ translate(false); });
+$('translate-all').addEventListener('click', function(){ if (confirm('Přeložit znovu úplně všechno? Dosavadní překlady se nahradí novými.')) translate(true); });
+$('ai-key').addEventListener('change', function(){ store(STORE.ai, $('ai-key').value.trim() || null); toast($('ai-key').value.trim() ? 'Klíč pro překlady uložen v tomto prohlížeči.' : 'Klíč pro překlady smazán.'); });
+
 /* nastaveni */
 function paintWeb(){
-var w = stored(STORE.web); $('web-url').value = w;
+var w = stored(STORE.web); $('web-url').value = w; $('ai-key').value = stored(STORE.ai);
 $('viewweb').hidden = !w; $('viewweb').href = w || '#';
 }
 $('web-url').addEventListener('change', function(){ store(STORE.web, $('web-url').value.trim() || null); paintWeb(); });
 $('logout').addEventListener('click', function(){
 if (dirty && !confirm('Máš neuložené změny. Opravdu se odhlásit?')) return;
-store(STORE.tok, null); dirty = false; location.reload();
+store(STORE.tok, null); store(STORE.ai, null); dirty = false; location.reload();
 });
 
 /* prihlaseni */
 function showLogin(msg){
-$('app').hidden = true; $('save').hidden = true; $('state').hidden = true; $('login').hidden = false;
+$('app').hidden = true; $('save').hidden = true; $('translate').hidden = true; $('state').hidden = true; $('login').hidden = false;
 $('login-msg').textContent = msg || '';
 }
 function start(){
-$('login').hidden = true; $('app').hidden = false; $('save').hidden = false;
+$('login').hidden = true; $('app').hidden = false; $('save').hidden = false; $('translate').hidden = false;
 paintWeb(); fillTexts(); renderList(); paintState();
 $('who').textContent = 'Přihlášeno klíčem k repozitáři ' + OWNER + '/' + REPO + '. Klíč je uložený jen v tomto prohlížeči.';
 }
