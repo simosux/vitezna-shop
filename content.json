@@ -57,9 +57,9 @@
   },
   {
    "id": "p4",
-   "name": "Věc č. 4",
-   "mat": "materiál",
-   "dim": "rozměr",
+   "name": "Corner atmospheric light",
+   "mat": "Dřevěná prekližka, PETG",
+   "dim": "30 x 30 cm ",
    "short": "Sem přijde krátký popis, jedna věta.",
    "long": "Místo pro další věc. Sem přijde delší text: z čeho je, jak vznikla a jak se o ni starat.",
    "sold": false,
@@ -67,8 +67,20 @@
    "hidden": false,
    "photos": [
     {
-     "f": "https://test-vitezna.carrd.co/assets/images/gallery05/a2221c88_original.jpg",
-     "t": "https://test-vitezna.carrd.co/assets/images/gallery05/a2221c88.jpg"
+     "f": "img/p4-mv230buemo2f.jpg",
+     "t": "img/p4-mv230buemo2f-t.jpg"
+    },
+    {
+     "f": "img/p4-mv230c6sgcgb.jpg",
+     "t": "img/p4-mv230c6sgcgb-t.jpg"
+    },
+    {
+     "f": "img/p4-mv230b7bk61w.jpg",
+     "t": "img/p4-mv230b7bk61w-t.jpg"
+    },
+    {
+     "f": "img/p4-mv230bkluqir.jpg",
+     "t": "img/p4-mv230bkluqir-t.jpg"
     }
    ]
   },
