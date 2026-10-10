@@ -76,8 +76,11 @@ main{padding:12px max(16px,env(safe-area-inset-right)) calc(32px + env(safe-area
 .tr-langs{display:flex;flex-direction:column;gap:12px;margin-top:10px}
 .tr-lang{border-top:1px solid var(--line);padding-top:10px;font-size:14px;line-height:1.5}
 .tr-lang h4{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.tr-lang p{margin:0 0 4px;white-space:pre-wrap}
-.tr-lang .tr-k{color:var(--muted)}
+.tr-lang{display:flex;flex-direction:column;gap:8px}
+.tr-lang label{display:block;font-size:13px;color:var(--muted);margin-bottom:3px}
+.tr-lang input,.tr-lang textarea{font-size:15px;padding:9px 11px}
+.tr-lang textarea{min-height:110px}
+.tr-note{margin:0;font-size:13px;color:var(--muted)}
 .order{display:flex;flex-direction:column;gap:4px}
 .order button{width:36px;height:30px;border-radius:7px;background:var(--soft);display:grid;place-items:center}
 .order button:disabled{opacity:.3;cursor:default}
@@ -670,14 +673,23 @@ txt.appendChild(el('b', '', ok ? 'Přeloženo' : !has ? 'Není co překládat' :
 txt.appendChild(document.createTextNode(ok ? 'Angličtina, němčina, francouzština a ruština odpovídají českému textu.' : !has ? 'Až napíšeš text, půjde přeložit.' : old ? 'Na webu se v ostatních jazycích zatím ukazuje čeština. Přelož a ulož změnu.' : 'V ostatních jazycích se zatím ukazuje čeština.'));
 b.hidden = !has || ok; b.disabled = !!busyT || saving;
 b.textContent = busyT ? busyT : 'Přeložit a uložit';
-det.hidden = !(o.tr && o.tr.src);
-sum.textContent = ok ? 'Zobrazit překlady' : 'Zobrazit poslední překlady';
+/* preklady jdou rucne doladit; uprava se ulozi tlacitkem Ulozit a plati, dokud se nezmeni cesky text */
+det.hidden = !ok;
+sum.textContent = 'Zobrazit a upravit překlady';
 var key = JSON.stringify(o.tr || {});
 if (key === shown) return; shown = key; list.textContent = '';
+list.appendChild(el('p', 'tr-note', 'Překlad můžeš ručně doladit, třeba změnit slovo. Ulož tlačítkem Uložit. Úprava platí, dokud nezměníš český text; pak se přeloží znovu.'));
 LANGS.forEach(function(l){
 var x = o.tr && o.tr[l[0]]; if (!x) return;
 var d = el('div', 'tr-lang'); d.appendChild(el('h4', '', LANG_NAMES[l[0]]));
-f.forEach(function(k){ if (!x[k]) return; var p = el('p'); p.appendChild(el('span', 'tr-k', LABELS[k] + ': ')); p.appendChild(document.createTextNode(x[k])); d.appendChild(p); });
+f.forEach(function(k){
+if (!String(o[k] || '').trim()) return;
+var w = el('div'), id = 'tr-' + Math.random().toString(36).slice(2, 8), lab = el('label', '', LABELS[k]), inp = (k === 'long' || k === 'text') ? el('textarea') : el('input');
+lab.htmlFor = id; inp.id = id; if (inp.tagName === 'INPUT') inp.type = 'text';
+inp.lang = l[0]; inp.value = x[k] || ''; inp.dataset.lang = l[0]; inp.dataset.key = k;
+inp.addEventListener('input', function(){ x[k] = inp.value; shown = JSON.stringify(o.tr); mark(); });
+w.appendChild(lab); w.appendChild(inp); d.appendChild(w);
+});
 list.appendChild(d);
 });
 }
