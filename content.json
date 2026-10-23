@@ -135,22 +135,26 @@
    "mat": "Dřevěná prekližka, PETG",
    "dim": "",
    "short": "",
-   "long": "",
+   "long": "Během výroby dělám někdy až zásadní změny a překopávám i účel toho, jak by měl produkt fungovat. Tohle měla bejt taková odkládací polička vysoko do rohu místnosti. Prostě bláznovina, museli byste lézt po štaflích abyste si tam odložili knížku. Ikdyž mi ta představa přišla vtipná a chvíli jsem se tím dobře bavil, nakonec jsem se z toho jal udělat světlo nejen do rohu. Ale hlavně tam. Je to takový atmosférický a zatím jsem vyrobil jen jeden kus, takže jestli jsi ready, mít tenhle prototyp doma, piš. Dodá ti to libo náladu do domu.",
    "sold": false,
    "unique": false,
    "hidden": false,
    "photos": [
     {
+     "f": "img/p4-mvlkh4ww23af.jpg",
+     "t": "img/p4-mvlkh4ww23af-t.jpg"
+    },
+    {
      "f": "img/p4-mv230buemo2f.jpg",
      "t": "img/p4-mv230buemo2f-t.jpg"
     },
     {
-     "f": "img/p4-mv230c6sgcgb.jpg",
-     "t": "img/p4-mv230c6sgcgb-t.jpg"
-    },
-    {
      "f": "img/p4-mv230b7bk61w.jpg",
      "t": "img/p4-mv230b7bk61w-t.jpg"
+    },
+    {
+     "f": "img/p4-mv230c6sgcgb.jpg",
+     "t": "img/p4-mv230c6sgcgb-t.jpg"
     },
     {
      "f": "img/p4-mv230bkluqir.jpg",
