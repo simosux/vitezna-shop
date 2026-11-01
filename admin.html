@@ -64,6 +64,10 @@ main{padding:12px max(16px,env(safe-area-inset-right)) calc(32px + env(safe-area
 .chip-unique{background:#e3e9fd;color:#1c3fae}
 .chip-hidden{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
 .chip-warn{background:#fff1e3;color:var(--warn)}
+.key-row{display:flex;gap:8px;align-items:stretch}
+.key-row input{flex:1;min-width:0}
+.key-row .btn{flex:none}
+.key-ok{margin:0;font-size:13px;color:#1f8a4c;font-weight:600}
 /* preklady */
 .trbox{background:var(--card);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:10px}
 .tr-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
@@ -241,7 +245,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
 
 <section id="tab-settings" class="textpage" hidden>
 <div class="field"><label for="web-url">Adresa webu</label><input type="text" id="web-url" placeholder="https://…" inputmode="url"><p class="hint">Kam vede tlačítko Web nahoře. Ukládá se jen v tomto prohlížeči.</p></div>
-<div class="field"><label for="ai-key">Klíč pro překlady (Claude)</label><input type="password" id="ai-key" autocomplete="off" spellcheck="false" placeholder="sk-ant-…"><p class="hint">Tlačítko Přeložit nahoře přeloží názvy, popisy, O projektu a Podmínky do angličtiny, němčiny, francouzštiny a ruštiny a rovnou je uloží. Klíč vytvoříš na <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> (Create Key). Platí se z kreditu tvého účtu, jeden překlad celého webu stojí haléře. Klíč zůstává jen v tomto prohlížeči.</p><div><button class="btn btn-ghost" id="translate-all" type="button">Přeložit všechno znovu</button></div></div>
+<div class="field"><label for="ai-key">Klíč pro překlady (Claude)</label><div class="key-row"><input type="password" id="ai-key" autocomplete="off" spellcheck="false" placeholder="sk-ant-…"><button class="btn btn-primary" id="ai-save" type="button">Uložit klíč</button></div><p class="key-ok" id="ai-ok" hidden>Klíč je uložený v tomto prohlížeči.</p><p class="hint">Tlačítko Přeložit nahoře přeloží názvy, popisy, O projektu a Podmínky do angličtiny, němčiny, francouzštiny a ruštiny a rovnou je uloží. Klíč vytvoříš na <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a> (Create Key). Platí se z kreditu tvého účtu, jeden překlad celého webu stojí haléře. Klíč zůstává jen v tomto prohlížeči.</p><div><button class="btn btn-ghost" id="translate-all" type="button">Přeložit všechno znovu</button></div></div>
 <div class="field"><span class="group-title">Přístup</span><p class="hint" id="who"></p><div><button class="btn btn-danger" id="logout" type="button">Odhlásit a smazat klíč z tohoto zařízení</button></div></div>
 </section>
 
@@ -641,14 +645,27 @@ b.title = n ? 'Přeloží jen texty, které se změnily, a uloží je.' : 'Všec
 trBoxes = trBoxes.filter(function(x){ return x.el.isConnected; });
 trBoxes.forEach(function(x){ x.paint(); });
 }
-function haveKey(){
+/* bez klice: otevre Nastaveni; po ulozeni klice se vrati zpet a v prekladu pokracuje */
+var resume = null;
+function tabTo(name){ [].forEach.call(document.querySelectorAll('.tab'), function(o){ if (o.dataset.tab === name) o.click(); }); }
+function haveKey(jobs){
 if (stored(STORE.ai)) return true;
-[].forEach.call(document.querySelectorAll('.tab'), function(o){ if (o.dataset.tab === 'settings') o.click(); });
-$('ai-key').focus(); toast('Nejdřív vlož klíč pro překlady (Claude).', true); return false;
+var cur = document.querySelector('.tab[aria-selected="true"]');
+resume = { jobs: jobs, tab: cur ? cur.dataset.tab : 'products' };
+tabTo('settings');
+$('ai-key').focus(); toast('Vlož klíč pro překlady a klikni na Uložit klíč. Pak se překlad sám spustí.'); return false;
 }
+function saveKey(){
+var v = $('ai-key').value.trim();
+store(STORE.ai, v || null); paintKey();
+if (!v){ toast('Klíč pro překlady smazán.'); return; }
+if (resume){ var r = resume; resume = null; tabTo(r.tab); toast('Klíč uložen. Překládám…'); runJobs(r.jobs.length ? r.jobs : pendingJobs(false)); }
+else toast('Klíč pro překlady uložen v tomto prohlížeči.');
+}
+function paintKey(){ var has = !!stored(STORE.ai); $('ai-ok').hidden = !has || $('ai-key').value.trim() !== stored(STORE.ai); $('ai-save').textContent = has ? 'Uložit klíč' : 'Uložit klíč'; }
 function runJobs(jobs){
 if (busyT || saving || !jobs.length) return;
-if (!haveKey()) return;
+if (!haveKey(jobs)) return;
 var done = 0, failed = null;
 function step(){ busyT = jobs.length > 1 ? 'Překládám ' + (done + 1) + ' / ' + jobs.length + '…' : 'Překládám…'; paintState(); }
 step();
@@ -717,11 +734,13 @@ return box;
 }
 $('translate').addEventListener('click', function(){ translate(false); });
 $('translate-all').addEventListener('click', function(){ if (confirm('Přeložit znovu úplně všechno? Dosavadní překlady se nahradí novými.')) translate(true); });
-$('ai-key').addEventListener('change', function(){ store(STORE.ai, $('ai-key').value.trim() || null); toast($('ai-key').value.trim() ? 'Klíč pro překlady uložen v tomto prohlížeči.' : 'Klíč pro překlady smazán.'); });
+$('ai-save').addEventListener('click', saveKey);
+$('ai-key').addEventListener('keydown', function(e){ if (e.key === 'Enter'){ e.preventDefault(); saveKey(); } });
+$('ai-key').addEventListener('input', paintKey);
 
 /* nastaveni */
 function paintWeb(){
-var w = stored(STORE.web); $('web-url').value = w; $('ai-key').value = stored(STORE.ai);
+var w = stored(STORE.web); $('web-url').value = w; $('ai-key').value = stored(STORE.ai); paintKey();
 $('viewweb').hidden = !w; $('viewweb').href = w || '#';
 }
 $('web-url').addEventListener('change', function(){ store(STORE.web, $('web-url').value.trim() || null); paintWeb(); });
