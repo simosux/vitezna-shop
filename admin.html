@@ -577,31 +577,49 @@ if (f.some(function(k){ return String(o[k] || '') !== String(t.src[k] || ''); })
 return LANGS.every(function(l){ return t[l[0]] && typeof t[l[0]] === 'object'; });
 }
 function hasText(o, f){ return f.some(function(k){ return String(o[k] || '').trim(); }); }
+/* preklad pres nastroj (tool use): Claude vraci primo strukturovana data, ne volny text, takze nemuze prijit v necitelne podobe */
 function ask(fields, kind){
-var key = stored(STORE.ai);
-var sys = 'You translate the website of Vítězná, a small Czech studio selling handmade one-off objects (paintings, plaster casts, CNC-cut plywood pieces). Translate the given Czech fields into English (en), German (de), French (fr) and Russian (ru). Write natural, concise, warm gallery-style copy as a native speaker would, not word-for-word. Keep the meaning and facts exactly; keep numbers, units and dimensions; use each language\'s own typographic quotes. Product names: translate descriptive Czech names (e.g. "Kafkova hlava" → "Kafka’s Head", "Věc č. 8" → "Item no. 8"); keep brand and personal names. Keep paragraph breaks (blank lines) exactly. An empty field stays empty. Reply with JSON only, no comments: {"en":{…},"de":{…},"fr":{…},"ru":{…}} with the same keys as the input.';
-var user = (kind === 'product' ? 'Product texts' : 'Page text') + ' (Czech):\n' + JSON.stringify(fields, null, 1);
+var key = stored(STORE.ai), keys = Object.keys(fields);
+var sys = 'You translate the website of Vítězná, a small Czech studio selling handmade one-off objects (paintings, plaster casts, CNC-cut plywood pieces, light objects). Translate the given Czech fields into English (en), German (de), French (fr) and Russian (ru). Write natural, concise, warm gallery-style copy as a native speaker would, not word-for-word. Keep the meaning and facts exactly; keep numbers, units and dimensions; use each language\'s own typographic quotes. Product names: translate descriptive Czech names (e.g. "Kafkova hlava" → "Kafka’s Head", "Věc č. 8" → "Item no. 8"); keep names that are already English, brand names and personal names. Keep paragraph breaks (blank lines) exactly. An empty field stays empty. Return the result by calling the save_translation tool.';
+var user = (kind === 'product' ? 'Product texts' : 'Page text') + ' (Czech), JSON:\n' + JSON.stringify(fields, null, 1);
+var one = { type: 'object', properties: {}, required: keys };
+keys.forEach(function(k){ one.properties[k] = { type: 'string' }; });
+var schema = { type: 'object', properties: {}, required: LANGS.map(function(l){ return l[0]; }) };
+LANGS.forEach(function(l){ schema.properties[l[0]] = one; });
+var tool = { name: 'save_translation', description: 'Save the translations of the Czech fields into en, de, fr and ru.', input_schema: schema };
 function call(i){
-return fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: MODELS[i], max_tokens: 4000, system: sys, messages: [{ role: 'user', content: user }] }) }).then(function(r){
+return fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: MODELS[i], max_tokens: 8000, system: sys, tools: [tool], tool_choice: { type: 'tool', name: 'save_translation' }, messages: [{ role: 'user', content: user }] }) }).then(function(r){
 return r.json().catch(function(){ return {}; }).then(function(j){
 if (r.ok) return j;
 var m = (j.error && j.error.message) || ('HTTP ' + r.status);
 if ((r.status === 404 || /model/i.test(m) && r.status === 400) && i + 1 < MODELS.length) return call(i + 1);
-var e = new Error(r.status === 401 ? 'Klíč pro překlady nefunguje. Zkontroluj ho v Nastavení.' : /credit|balance|billing/i.test(m) ? 'Na účtu Claude došel kredit. Dobij ho na console.anthropic.com.' : 'Překlad se nepovedl: ' + m);
-throw e;
+if (r.status === 429 || r.status === 529 || r.status >= 500) throw new Error('Služba Claude je teď přetížená. Zkus to prosím za chvíli znovu.');
+throw new Error(r.status === 401 ? 'Klíč pro překlady nefunguje. Zkontroluj ho v Nastavení.' : /credit|balance|billing/i.test(m) ? 'Na účtu Claude došel kredit. Dobij ho na console.anthropic.com.' : 'Překlad se nepovedl: ' + m);
 });
 });
 }
-return call(0).then(function(j){
-var t = ((j.content || [])[0] || {}).text || '', a = t.indexOf('{'), b = t.lastIndexOf('}'), o;
-try { o = JSON.parse(t.slice(a, b + 1)); } catch (e) { throw new Error('Překlad přišel v nečitelné podobě. Zkus to prosím znovu.'); }
+function parse(j){
+var blocks = j.content || [], use = blocks.filter(function(b){ return b.type === 'tool_use'; })[0], o = use && use.input;
+if (!o){
+/* zaloha: kdyby prisel obycejny text, zkusi z nej vytahnout JSON */
+var t = blocks.filter(function(b){ return b.type === 'text'; }).map(function(b){ return b.text; }).join(''), a = t.indexOf('{'), b = t.lastIndexOf('}');
+try { o = JSON.parse(t.slice(a, b + 1)); } catch (e) { o = null; }
+}
+if (!o && j.stop_reason === 'max_tokens') throw new Error('Text je na jeden překlad moc dlouhý. Zkrať ho nebo ho rozděl.');
+if (!o) throw new Error('Překlad přišel v nečitelné podobě. Zkus to prosím znovu.');
 var out = {};
 LANGS.forEach(function(l){
 var x = o[l[0]];
+if (typeof x === 'string'){ try { x = JSON.parse(x); } catch (e) {} }
 if (!x || typeof x !== 'object') throw new Error('V překladu chybí ' + l[1] + '. Zkus to prosím znovu.');
-out[l[0]] = {}; Object.keys(fields).forEach(function(k){ out[l[0]][k] = fields[k] ? String(x[k] || '').trim() : ''; });
+out[l[0]] = {}; keys.forEach(function(k){ out[l[0]][k] = fields[k] ? String(x[k] || '').trim() : ''; });
 });
 return out;
+}
+/* kdyz odpoved nesedi, zkusi to jeste jednou sama */
+return call(0).then(parse).catch(function(e){
+if (!/nečitelné|chybí/.test(e.message)) throw e;
+return call(0).then(parse);
 });
 }
 function needs(o, f){ return !!o && hasText(o, f) && !fresh(o, f); }
