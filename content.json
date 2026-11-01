@@ -150,40 +150,40 @@
     }
    ],
    "tr": {
-    "src": {
-     "name": "Corner ambient light",
-     "mat": "Dřevěná prekližka, PETG",
-     "dim": "",
-     "short": "Sem přijde krátký popis, jedna věta.",
-     "long": "Místo pro další věc. Sem přijde delší text: z čeho je, jak vznikla a jak se o ni starat."
-    },
     "en": {
      "name": "Corner ambient light",
      "mat": "Plywood, PETG",
      "dim": "",
-     "short": "A short description goes here, one sentence.",
-     "long": "A place for another piece. A longer text goes here: what it is made of, how it came about and how to care for it."
+     "short": "",
+     "long": "During the making process, I sometimes make radical changes and completely rethink how a piece should work. This one started as a small shelf tucked high in the corner—a pretty impractical idea that would've required a ladder just to set down a book. While I found the concept amusing and enjoyed tinkering with it for a while, I eventually decided to turn it into a light instead. Specifically, a light for the corner. It's atmospheric, and so far there's just this one prototype. If you're keen to take it home, get in touch. It'll bring a certain magic to your space."
     },
     "de": {
      "name": "Corner ambient light",
      "mat": "Sperrholz, PETG",
      "dim": "",
-     "short": "Hier kommt eine kurze Beschreibung hin, ein Satz.",
-     "long": "Platz für ein weiteres Stück. Hier kommt ein längerer Text hin: woraus es besteht, wie es entstanden ist und wie man es pflegt."
+     "short": "",
+     "long": "Während der Herstellung überdenke ich manchmal grundlegend mein Vorgehen und werfe sogar den ganzen Zweck eines Produkts über den Haufen. Das hier sollte eigentlich ein kleines Regalbrett sein, das man hoch oben in der Zimmerecke anbringt. Pure Verrücktheit – man müsste die Leiter rauskriegen, um dort ein Buch abzustellen. Obwohl mir die Idee witzig vorkam und ich eine Weile Spaß daran hatte, habe ich daraus schließlich ein Licht gemacht – nicht nur für die Ecke, sondern vor allem darin. Ein atmosphärisches Ding. Bislang habe ich nur ein Stück gebaut, also wenn du bereit bist, diesen Prototyp zu dir nach Hause zu holen, schreib mir. Das zaubert dir ganz sicher eine gute Laune ins Haus."
     },
     "fr": {
      "name": "Corner ambient light",
      "mat": "Contreplaqué, PETG",
      "dim": "",
-     "short": "Une courte description ici, en une phrase.",
-     "long": "Une place pour une autre pièce. Ici viendra un texte plus long : de quoi elle est faite, comment elle est née et comment en prendre soin."
+     "short": "",
+     "long": "Pendant la fabrication, il m'arrive de faire des changements radicaux et de repenser complètement l'usage d'une pièce. Celle-ci devait être une petite étagère dans le coin haut d'une pièce. Une folie, vraiment – il aurait fallu grimper sur une échelle pour y poser un livre. L'idée m'a fait rire et j'ai pris plaisir à y penser un moment, mais j'en ai finalement tiré une lumière pensée non seulement pour le coin, mais surtout pour le coin. C'est quelque chose d'atmosphérique et pour l'instant je n'en ai fait qu'un seul exemplaire. Si tu as envie d'avoir ce prototype chez toi, fais-moi signe. Ça apporte une belle ambiance à la maison."
     },
     "ru": {
      "name": "Corner ambient light",
      "mat": "Фанера, PETG",
      "dim": "",
-     "short": "Здесь будет короткое описание в одно предложение.",
-     "long": "Место для ещё одной вещи. Здесь будет более длинный текст: из чего она сделана, как появилась и как за ней ухаживать."
+     "short": "",
+     "long": "В процессе работы я часто вношу существенные изменения и переосмысляю функцию предмета. Изначально это была полочка для хранения в углу комнаты под самым потолком. Честно говоря, идея была безумной — пришлось бы лезть по лестнице, чтобы положить туда книгу. Хотя эта мысль меня развеселила и я какое-то время развлекался ей, в итоге решил сделать светильник, который светит не только в угол, но прежде всего туда. Это такой атмосферный предмет, и пока я изготовил только один экземпляр. Если ты готов к тому, чтобы этот прототип поселился у тебя дома, напиши мне. Это подарит твоему дому особое настроение."
+    },
+    "src": {
+     "name": "Corner ambient light",
+     "mat": "Dřevěná prekližka, PETG",
+     "dim": "",
+     "short": "",
+     "long": "Během výroby dělám někdy až zásadní změny a překopávám i účel toho, jak by měl produkt fungovat. Tohle měla bejt taková odkládací polička vysoko do rohu místnosti. Prostě bláznovina, museli byste lézt po štaflích, abyste si tam odložili knížku. Ikdyž mi ta představa přišla vtipná a chvíli jsem se tím dobře bavil, nakonec jsem se z toho jal udělat světlo nejen do rohu. Ale hlavně tam. Je to takový atmosférický a zatim jsem vyrobil jen jeden kus, takže jestli jsi ready, mít tenhle prototyp doma, piš. Dodá ti to libo náladu do domu."
     }
    }
   },
@@ -280,25 +280,25 @@
   "title": "Obraz za milion",
   "text": "Hodně motivačních knih píše hodně rad, mluví se o motivaci PROČ, poslání, nebo vizualizaci. Já si třeba představuju, že disponuju majetkem nezměrných rozměrů, setkávám se se skvělými lidmi, pracuju jako konzultant a do toho TROCHU tvořim produkty a art! A jsem za to více než královsky zaplacen.\n\nPravdou je, že věřím jakoby v nějakej svůj sen a ten strašně dlouho pronásleduju. Lidi kolem mě a přátelé bohatnou a já se furt zaměřuju na strategii výroby a vnitřní filozofie. Chtěl bych, aby se optimismus a radost z tvorby dostávala víc do společnosti a abychom se společně víc smáli.\n\nTakže jestli jsem vás prodejem za milion rozesmál, jsem šťastnej:D!!\nJestli jste  z druhý sorty a ten milion máte.. jinými slovy, pokud disponujete bohatstvím, možná bychom si mohli zahrát hru. Vy získáte dílo a slávu frajera, který neváhal trochz zariskovat a já zároveň dostanu příležitost se do ty tvorby pořádně pustit. Protože mi něco říká, že už bych neměl čekat.\n\n",
   "tr": {
-   "src": {
-    "title": "Obraz za milion",
-    "text": "Sem napiš popis díla: co na obraze je, jak vznikl, technika a rozměr.\n\nSem napiš podmínky, které musí zájemce splnit, aby obraz mohl koupit.\n\nTlačítko „Hra může začít“ pod textem otevře formulář pro zprávu."
-   },
    "en": {
-    "title": "Painting for a Million",
-    "text": "Write a description of the work here: what the painting shows, how it came about, the technique and the size.\n\nWrite the conditions here that a buyer must meet to be able to buy the painting.\n\nThe “Let the game begin” button below the text opens a message form."
+    "title": "A Million-Dollar Painting",
+    "text": "Plenty of self-help books dish out plenty of advice—they talk about motivation and WHY, about purpose and visualization. I like to imagine that I possess wealth beyond measure, that I spend time with brilliant people, that I work as a consultant while also DABBLING in creating products and art! And that I'm handsomely rewarded for it all.\n\nThe truth is, I believe in a dream of sorts, and I've been chasing it for quite a long time. The people around me and my friends are getting rich, and yet I keep focusing on production strategy and inner philosophy. I wish we could see more optimism and joy in creation ripple through society, so that we might all laugh together a little more.\n\nSo if I've made you laugh with my pitch for a million, I'm happy :D!!\n\nNow, if you're the second type—and you happen to have that million... in other words, if you're wealthy, perhaps we could play a game. You get a work of art and the glory of being someone brave enough to take a chance, and I get the opportunity to throw myself fully into creation. Because something tells me I shouldn't wait any longer."
    },
    "de": {
-    "title": "Bild für eine Million",
-    "text": "Hier kommt die Beschreibung des Werks hin: was auf dem Bild zu sehen ist, wie es entstanden ist, Technik und Maße.\n\nHier kommen die Bedingungen hin, die ein Interessent erfüllen muss, um das Bild kaufen zu können.\n\nDie Schaltfläche „Das Spiel kann beginnen“ unter dem Text öffnet ein Nachrichtenformular."
+    "title": "Ein Bild für eine Million",
+    "text": "Viele motivierende Bücher geben viele Tipps, sprechen vom WARUM der Motivation, von Mission oder Visualisierung. Ich stelle mir zum Beispiel vor, über immense Vermögen zu verfügen, auf großartige Menschen zu treffen, als Berater zu arbeiten und dabei EIN BISSCHEN Produkte und Kunst zu schaffen! Und dafür bin ich mehr als fürstlich bezahlt.\n\nDie Wahrheit ist, ich glaube an einen eigenen Traum und verfolge ihn schon furchtbar lange. Menschen um mich herum und Freunde werden reich, und ich konzentriere mich ständig auf Produktionsstrategie und innere Philosophie. Ich möchte, dass Optimismus und Freude am Schaffen mehr in die Gesellschaft gelangen und dass wir zusammen mehr lachen.\n\nAlso, wenn ich euch mit meinem Million-Verkauf zum Lachen gebracht habe, bin ich glücklich! :D!!\nWenn ihr von der anderen Sorte seid und die Million habt... anders gesagt, wenn ihr über Wohlstand verfügt, könnten wir vielleicht ein Spiel spielen. Ihr bekommt ein Werk und den Ruhm eines Typen, der nicht gezögert hat, ein bisschen zu riskieren, und ich bekomme gleichzeitig die Gelegenheit, mich endlich ordentlich in diese Arbeit zu stürzen. Denn mir sagt etwas, dass ich nicht länger warten sollte."
    },
    "fr": {
-    "title": "Tableau à un million",
-    "text": "Écris ici la description de l’œuvre : ce que montre le tableau, comment il est né, la technique et les dimensions.\n\nÉcris ici les conditions qu’un acheteur doit remplir pour pouvoir acheter le tableau.\n\nLe bouton « Que le jeu commence » sous le texte ouvre un formulaire de message."
+    "title": "Un tableau pour un million",
+    "text": "Beaucoup de livres de motivation regorgent de conseils, on parle beaucoup du POURQUOI, de mission, de visualisation. Moi par exemple, j'aime imaginer que je dispose d'une richesse sans limites, que je rencontre des gens extraordinaires, que je travaille comme consultant et qu'en plus je crée un PEU des produits et de l'art ! Et que je suis grassement rémunéré pour tout ça.\n\nLa vérité, c'est que je crois en une certaine vision et que je la poursuis depuis très longtemps. Les gens autour de moi et mes amis s'enrichissent tandis que moi je reste concentré sur la stratégie de production et la philosophie interne. J'aimerais que l'optimisme et la joie de créer se propagent davantage dans la société et que nous riions ensemble un peu plus.\n\nDonc si je vous ai fait rire avec ce tableau d'un million, je suis heureux :D!!\nSi vous êtes de la bonne trempe et que ce million vous ne pose aucun problème... autrement dit, si vous disposez d'une certaine richesse, peut-être pourrions-nous jouer une partie. Vous obtiendrez une œuvre et la gloire d'un mec qui n'a pas hésité à prendre quelques risques, et moi j'aurais l'occasion de me lancer sérieusement dans la création. Parce que quelque chose me dit que je ne devrais pas attendre."
    },
    "ru": {
     "title": "Картина за миллион",
-    "text": "Здесь опиши произведение: что изображено на картине, как она появилась, техника и размер.\n\nЗдесь напиши условия, которые должен выполнить желающий, чтобы купить картину.\n\nКнопка «Игра начинается» под текстом открывает форму для сообщения."
+    "text": "Мотивационные книги дают нам много советов — говорят о смысле, миссии, визуализации. А я люблю представлять себя: обладаю огромным богатством, общаюсь с замечательными людьми, консультирую, и при этом немного создаю продукты и искусство! И за это щедро вознаграждаюсь.\n\nЧестно говоря, я верю в какой-то свой сон и очень долго его преследую. Друзья вокруг меня богатеют, а я всё сосредоточен на производстве и внутренней философии. Я хочу, чтобы оптимизм и радость творчества приносили больше добра в общество и чтобы мы вместе больше смеялись.\n\nПоэтому, если я вас смешной картиной за миллион рубликов рассмешил, я счастлив :D!!\nЕсли же вы из тех редких людей, у которых этот миллион есть... другими словами, если вы обладаете богатством, может быть, мы сыграем в игру? Вы получите произведение и славу смельчака, который не побоялся немного рискнуть, а я получу возможность по-настоящему отдаться творчеству. Что-то мне подсказывает, что уже пора не ждать."
+   },
+   "src": {
+    "title": "Obraz za milion",
+    "text": "Hodně motivačních knih píše hodně rad, mluví se o motivaci PROČ, poslání, nebo vizualizaci. Já si třeba představuju, že disponuju majetkem nezměrných rozměrů, setkávám se se skvělými lidmi, pracuju jako konzultant a do toho TROCHU tvořim produkty a art! A jsem za to více než královsky zaplacen.\n\nPravdou je, že věřím jakoby v nějakej svůj sen a ten strašně dlouho pronásleduju. Lidi kolem mě a přátelé bohatnou a já se furt zaměřuju na strategii výroby a vnitřní filozofie. Chtěl bych, aby se optimismus a radost z tvorby dostávala víc do společnosti a abychom se společně víc smáli.\n\nTakže jestli jsem vás prodejem za milion rozesmál, jsem šťastnej:D!!\nJestli jste  z druhý sorty a ten milion máte.. jinými slovy, pokud disponujete bohatstvím, možná bychom si mohli zahrát hru. Vy získáte dílo a slávu frajera, který neváhal trochz zariskovat a já zároveň dostanu příležitost se do ty tvorby pořádně pustit. Protože mi něco říká, že už bych neměl čekat.\n\n"
    }
   }
  }
