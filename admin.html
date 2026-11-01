@@ -581,49 +581,55 @@ if (f.some(function(k){ return String(o[k] || '') !== String(t.src[k] || ''); })
 return LANGS.every(function(l){ return t[l[0]] && typeof t[l[0]] === 'object'; });
 }
 function hasText(o, f){ return f.some(function(k){ return String(o[k] || '').trim(); }); }
-/* preklad pres nastroj (tool use): Claude vraci primo strukturovana data, ne volny text, takze nemuze prijit v necitelne podobe */
+/* preklad: pro kazdy jazyk zvlast pres nastroj (tool use); Claude vraci primo strukturovana data. Kazdy jazyk se pri chybe sam zkusi jeste dvakrat */
+var LANG_EN = { en: 'English', de: 'German', fr: 'French', ru: 'Russian' };
 function ask(fields, kind){
-var key = stored(STORE.ai), keys = Object.keys(fields);
-var sys = 'You translate the website of Vítězná, a small Czech studio selling handmade one-off objects (paintings, plaster casts, CNC-cut plywood pieces, light objects). Translate the given Czech fields into English (en), German (de), French (fr) and Russian (ru). Write natural, concise, warm gallery-style copy as a native speaker would, not word-for-word. Keep the meaning and facts exactly; keep numbers, units and dimensions; use each language\'s own typographic quotes. Product names: translate descriptive Czech names (e.g. "Kafkova hlava" → "Kafka’s Head", "Věc č. 8" → "Item no. 8"); keep names that are already English, brand names and personal names. Keep paragraph breaks (blank lines) exactly. An empty field stays empty. Return the result by calling the save_translation tool.';
-var user = (kind === 'product' ? 'Product texts' : 'Page text') + ' (Czech), JSON:\n' + JSON.stringify(fields, null, 1);
-var one = { type: 'object', properties: {}, required: keys };
-keys.forEach(function(k){ one.properties[k] = { type: 'string' }; });
-var schema = { type: 'object', properties: {}, required: LANGS.map(function(l){ return l[0]; }) };
-LANGS.forEach(function(l){ schema.properties[l[0]] = one; });
-var tool = { name: 'save_translation', description: 'Save the translations of the Czech fields into en, de, fr and ru.', input_schema: schema };
-function call(i){
-return fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: MODELS[i], max_tokens: 8000, system: sys, tools: [tool], tool_choice: { type: 'tool', name: 'save_translation' }, messages: [{ role: 'user', content: user }] }) }).then(function(r){
+var key = stored(STORE.ai), keys = Object.keys(fields).filter(function(k){ return String(fields[k] || '').trim(); });
+var one = { type: 'object', properties: {}, required: keys, additionalProperties: false };
+keys.forEach(function(k){ one.properties[k] = { type: 'string', description: 'Translation of the Czech field "' + k + '"' }; });
+var src = {}; keys.forEach(function(k){ src[k] = fields[k]; });
+function sys(code){ return 'You translate the website of Vítězná, a small Czech studio selling handmade one-off objects (paintings, plaster casts, CNC-cut plywood pieces, light objects). Translate the given Czech fields into ' + LANG_EN[code] + '. Write natural, concise, warm gallery-style copy as a native speaker would, not word-for-word. Keep the meaning and facts exactly; keep numbers, units and dimensions; use the typographic quotes of the target language. Product names: translate descriptive Czech names (e.g. "Kafkova hlava" → "Kafka’s Head" in English, "Věc č. 8" → "Item no. 8"); keep names that are already English, brand names and personal names. Keep paragraph breaks (blank lines) exactly. Return every field by calling the save_translation tool once, with the same field names.'; }
+function call(code, i){
+var tool = { name: 'save_translation', description: 'Save the ' + LANG_EN[code] + ' translation of the Czech fields.', input_schema: one };
+var user = 'Target language: ' + LANG_EN[code] + ' (' + code + ').\n' + (kind === 'product' ? 'Product texts' : 'Page text') + ' in Czech, JSON:\n' + JSON.stringify(src, null, 1);
+return fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: MODELS[i], max_tokens: 6000, system: sys(code), tools: [tool], tool_choice: { type: 'tool', name: 'save_translation' }, messages: [{ role: 'user', content: user }] }) }).then(function(r){
 return r.json().catch(function(){ return {}; }).then(function(j){
 if (r.ok) return j;
 var m = (j.error && j.error.message) || ('HTTP ' + r.status);
-if ((r.status === 404 || /model/i.test(m) && r.status === 400) && i + 1 < MODELS.length) return call(i + 1);
-if (r.status === 429 || r.status === 529 || r.status >= 500) throw new Error('Služba Claude je teď přetížená. Zkus to prosím za chvíli znovu.');
-throw new Error(r.status === 401 ? 'Klíč pro překlady nefunguje. Zkontroluj ho v Nastavení.' : /credit|balance|billing/i.test(m) ? 'Na účtu Claude došel kredit. Dobij ho na console.anthropic.com.' : 'Překlad se nepovedl: ' + m);
+if ((r.status === 404 || /model/i.test(m) && r.status === 400) && i + 1 < MODELS.length) return call(code, i + 1);
+var e = new Error(r.status === 401 ? 'Klíč pro překlady nefunguje. Zkontroluj ho v Nastavení.' : /credit|balance|billing/i.test(m) ? 'Na účtu Claude došel kredit. Dobij ho na console.anthropic.com.' : (r.status === 429 || r.status === 529 || r.status >= 500) ? 'Služba Claude je teď přetížená. Zkus to prosím za chvíli znovu.' : 'Překlad se nepovedl: ' + m);
+e.fatal = r.status === 401 || /credit|balance|billing/i.test(m) || (r.status >= 400 && r.status < 500 && r.status !== 429);
+e.busy = r.status === 429 || r.status === 529 || r.status >= 500;
+throw e;
 });
 });
 }
-function parse(j){
+function parse(j, code){
+window.VT_LAST_TR = j;
 var blocks = j.content || [], use = blocks.filter(function(b){ return b.type === 'tool_use'; })[0], o = use && use.input;
-if (!o){
-/* zaloha: kdyby prisel obycejny text, zkusi z nej vytahnout JSON */
+if (o && typeof o === 'object' && o[code] && typeof o[code] === 'object' && !keys.every(function(k){ return typeof o[k] === 'string'; })) o = o[code];
+if (!o || typeof o !== 'object'){
 var t = blocks.filter(function(b){ return b.type === 'text'; }).map(function(b){ return b.text; }).join(''), a = t.indexOf('{'), b = t.lastIndexOf('}');
 try { o = JSON.parse(t.slice(a, b + 1)); } catch (e) { o = null; }
 }
-if (!o && j.stop_reason === 'max_tokens') throw new Error('Text je na jeden překlad moc dlouhý. Zkrať ho nebo ho rozděl.');
-if (!o) throw new Error('Překlad přišel v nečitelné podobě. Zkus to prosím znovu.');
-var out = {};
-LANGS.forEach(function(l){
-var x = o[l[0]];
-if (typeof x === 'string'){ try { x = JSON.parse(x); } catch (e) {} }
-if (!x || typeof x !== 'object') throw new Error('V překladu chybí ' + l[1] + '. Zkus to prosím znovu.');
-out[l[0]] = {}; keys.forEach(function(k){ out[l[0]][k] = fields[k] ? String(x[k] || '').trim() : ''; });
-});
+var bad = !o || keys.some(function(k){ return typeof o[k] !== 'string' || !o[k].trim(); });
+if (bad){
+var e = new Error(j.stop_reason === 'max_tokens' ? 'Text je na jeden překlad moc dlouhý. Zkrať ho nebo ho rozděl.' : 'V překladu chybí ' + { en: 'angličtina', de: 'němčina', fr: 'francouzština', ru: 'ruština' }[code] + '. Zkus to prosím znovu.');
+e.fatal = j.stop_reason === 'max_tokens';
+throw e;
+}
+var out = {}; Object.keys(fields).forEach(function(k){ out[k] = keys.indexOf(k) >= 0 ? String(o[k]).trim() : ''; });
 return out;
 }
-/* kdyz odpoved nesedi, zkusi to jeste jednou sama */
-return call(0).then(parse).catch(function(e){
-if (!/nečitelné|chybí/.test(e.message)) throw e;
-return call(0).then(parse);
+function one1(code, attempt){
+return call(code, 0).then(function(j){ return parse(j, code); }).catch(function(e){
+if (e.fatal || attempt >= 2) throw e;
+return new Promise(function(r){ setTimeout(r, e.busy ? 2500 : 400); }).then(function(){ return one1(code, attempt + 1); });
+});
+}
+/* jazyky se prekladaji soucasne; vysledek se pouzije, jen kdyz vyjdou vsechny ctyri */
+return Promise.all(LANGS.map(function(l){ return one1(l[0], 0); })).then(function(res){
+var out = {}; LANGS.forEach(function(l, i){ out[l[0]] = res[i]; }); return out;
 });
 }
 function needs(o, f){ return !!o && hasText(o, f) && !fresh(o, f); }
